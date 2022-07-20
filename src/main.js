@@ -7,6 +7,7 @@ import { Board } from './Board';
 import gsap from 'gsap';
 import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
 import dat from 'dat.gui';
+import { PreventDragClick } from './PreventDragClick';
 
 // Renderer
 const canvas = document.querySelector('#three-canvas');
@@ -47,7 +48,7 @@ const camera = new THREE.PerspectiveCamera(
 	0.1,
 	1000
 );
-camera.position.set(-11, 201, -10);
+camera.position.set(-0.5, 2, 5);
 camera.rotation.y = Math.PI;
 scene.add(camera);
 
@@ -56,12 +57,13 @@ scene.add(camera);
 const ambientLight = new THREE.AmbientLight('white', 1);
 scene.add(ambientLight);
 
-const spotLight = new THREE.SpotLight('white')
+// const spotLight = new THREE.SpotLight('white', 1, 30, Math.PI / 6);
+// scene.add(spotLight);
 
-const gui = new dat.GUI();
-   gui.add(light.position, "y", -300, 300, 0.01).name('메쉬의 y위치');
-   gui.add(light.position, "z", -200, 200, 0.01).name('메쉬의 z위치');
-   gui.add(light.position, "x", -200, 200, 0.01).name('카메라의 x위치');
+// const gui = new dat.GUI();
+//    gui.add(spotLight.position, "y", -300, 300, 0.01).name('메쉬의 y위치');
+//    gui.add(spotLight.position, "z", -200, 200, 0.01).name('메쉬의 z위치');
+//    gui.add(spotLight.position, "x", -200, 200, 0.01).name('카메라의 x위치');
 
 
 const gltfLoader = new GLTFLoader();
@@ -81,18 +83,18 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 // scene.add(floorMesh);
 
 const houses = [];
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5,y: 1, z: -5}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 7,y: 1, z: -25}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -10,y: 1, z: -45}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 10,y: 1, z: -65}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5, y: 1, z: -85 }));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5,y: 1, z: -5, index: 1}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 7,y: 1, z: -25, index: 2}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -10,y: 1, z: -45, index: 3}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 10,y: 1, z: -65, index: 4}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5, y: 1, z: -85, index: 5}));
 
 const boards = [];
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5,y: 1, z: -5}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 7,y: 1, z: -25}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -10,y: 1, z: -45}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 10,y: 1, z: -65}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5, y: 1, z: -85}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5,y: 1, z: -5, index: 1}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 7,y: 1, z: -25, index: 2}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -10,y: 1, z: -45, index: 3}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 10,y: 1, z: -65, index: 4}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5, y: 1, z: -85, index: 5}));
 
 // const cubeMaterial = new THREE.MeshBasicMaterial({
 // 	envMap: cubeTexture,
@@ -109,7 +111,7 @@ let mixer;
 
 	gltfLoader.load("/models/practiceblended.glb", (gltf) => {
 		const practiceMesh = gltf.scene.children[0];
-		practiceMesh.position.set(-8, 200, -5);
+		practiceMesh.position.set(3, 1, 10);
 		practiceMesh.rotation.y = Math.PI*0.2;
 		practiceMesh.scale.set(4, 4, 4);
 		practiceMesh.castShadow = true;
@@ -127,23 +129,42 @@ let mixer;
 		}, 1000);
 	});
 
-const planeGeometry = new THREE.PlaneGeometry(1000, 1000);
-const planeMaterial = new THREE.MeshStandardMaterial({ color: "royalblue" });
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.rotation.x = -Math.PI * 0.5;
-plane.position.set(-8,198,-5)
-plane.receiveShadow = true;
-scene.add(plane);
-
-const sphereGeometry = new THREE.SphereGeometry(20, 16, 16);
-const sphereMaterial = new THREE.MeshStandardMaterial({
+const planeGeometry = new THREE.PlaneGeometry(40, 15);
+const planeMaterial = new THREE.MeshStandardMaterial({
 	color: "royalblue",
+	side: THREE.DoubleSide,
+});
+const plane1 = new THREE.Mesh(planeGeometry, planeMaterial);
+const plane2 = new THREE.Mesh(planeGeometry, planeMaterial);
+plane1.rotation.x = -Math.PI * 0.5;
+plane1.position.set(0, -1, 15);
+plane2.position.set(0, 4, 15);
+plane1.receiveShadow = true;
+plane2.receiveShadow = true;
+scene.add(plane1, plane2);
+
+const btnGeometry = new THREE.SphereGeometry(0.5, 6, 6);
+const btnMaterial = new THREE.MeshStandardMaterial({
+	color: "black",
+	wireframe: true
+})
+
+const plane3 = new THREE.Mesh(btnGeometry, btnMaterial);
+plane3.position.set(-2, 4, 10);
+plane3.rotation.y = Math.PI;
+console.log(btnMaterial);
+scene.add(plane3);
+
+const sphereGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+const sphereMaterial = new THREE.MeshStandardMaterial({
+	color: "white",
 	side: THREE.DoubleSide
 });
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.castShadow = true;
 sphere.receiveShadow = true;
-sphere.position.set(-8, 195, -5)
+sphere.position.set(-3, 1, 9);
+sphere.name = "버튼";
 scene.add(sphere);
 	
 const loader = new FontLoader();
@@ -166,17 +187,58 @@ loader.load('./models/Dongle Light.json',
 
 		const material = new THREE.MeshStandardMaterial({
 			color: "white",
-			roughness: 0.3,
-			metalness: 0.5
+			roughness: 0.1,
+			metalness: 0.1
 		});
-		const mesh = new THREE.Mesh(textGeometry, material);
-		mesh.scale.set(2, 2, 2);
-		mesh.position.set(-13, 202, -5);
-		mesh.rotation.y = Math.PI;
+		const textMesh = new THREE.Mesh(textGeometry, material);
+		textMesh.scale.set(2, 2, 2);
+		textMesh.position.set(-3, 2, 10);
+		textMesh.castShadow = true;
+		textMesh.rotation.y = Math.PI;
 
-		scene.add(mesh);
+		scene.add(textMesh);
 	}
 );
+
+// raycaster
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+const preventDragClick = new PreventDragClick(canvas);
+
+canvas.addEventListener('click', (e) => {
+	if (preventDragClick.mouseMoved) return;
+	mouse.x = e.clientX / canvas.clientWidth * 2 - 1;
+	mouse.y = -(e.clientY / canvas.clientHeight * 2 - 1);
+
+	checkIntersects();
+});
+
+function checkIntersects() {
+	raycaster.setFromCamera(mouse, camera);
+
+	const intersects = raycaster.intersectObjects(scene.children);
+	console.log(intersects[0].object.name);
+
+	if (intersects[0].object.name == "버튼") {
+		gsap.to(
+			camera.rotation,
+			{
+				duration: 1,
+				y: 0,
+			}
+		);
+		gsap.to(
+			camera.position,
+			{
+				duration: 1,
+				x: -2,
+				y: 2,
+				z: 1,
+			}
+		);
+	}
+}
 
 // 그리기
 const clock = new THREE.Clock();
@@ -200,9 +262,9 @@ function setSection() {
 			camera.position,
 			{
 				duration: 1,
-				x: houses[newSection].x-2,
+				x: houses[newSection].x+3,
 				y: houses[newSection].y+1,
-				z: houses[newSection].z-5,
+				z: houses[newSection].z+6,
 			}
 		);
 		currentSection = newSection;
@@ -217,7 +279,11 @@ function setSize() {
 }
 
 // 이벤트
-window.addEventListener('scroll', setSection);
+window.addEventListener('scroll',
+	setSection);
 window.addEventListener('resize', setSize);
+window.addEventListener('beforeunload', () => { 
+	window.scrollTo(0,0);
+});
 
 draw();

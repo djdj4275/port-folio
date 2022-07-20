@@ -6,6 +6,8 @@ export class Board {
     this.y = info.y;
 		this.z = info.z;
 
+		this.index = info.index;
+
 		this.boardTexture = info.textureLoader.load(info.modelSrc);
 		
 		this.geometry = new THREE.PlaneGeometry(6, 5);
@@ -15,7 +17,8 @@ export class Board {
 		this.mesh.castShadow = true;
     this.mesh.position.set(this.x, this.y+1.7, this.z);
 		this.mesh.scale.set(1, 1, 1);
-		this.mesh.rotation.y = Math.PI*1.04;
+		this.mesh.rotation.y = Math.PI * 0.04;
+		this.mesh.name = `${this.index}번째 보드`;
 		info.scene.add(this.mesh);
 	}
 }
