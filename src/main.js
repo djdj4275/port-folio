@@ -240,7 +240,7 @@ function checkIntersects() {
 	}
 }
 
-// 그리기
+// 그리기 (시간)
 const clock = new THREE.Clock();
 
 function draw() {
