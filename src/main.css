@@ -1,6 +1,12 @@
 body {
 	margin: 0;
+	overflow: hidden;
 }
+
+body::-webkit-scrollbar {
+	display: none;
+}
+
 #three-canvas {
 	position: fixed;
 	left: 0;
@@ -10,7 +16,6 @@ body {
 
 .sections {
 	position: relative;
-	/* z-index: 1; */
 }
 
 .section {

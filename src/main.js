@@ -143,27 +143,34 @@ plane1.receiveShadow = true;
 plane2.receiveShadow = true;
 scene.add(plane1, plane2);
 
-const btnGeometry = new THREE.SphereGeometry(0.5, 6, 6);
+const btnGeometry = new THREE.TorusGeometry(0.8, 0.1, 16, 16);
 const btnMaterial = new THREE.MeshStandardMaterial({
-	color: "black",
+	color: "skyblue",
+	opacity: 0.4,
+	transparent: true,
 	wireframe: true
 })
 
-const plane3 = new THREE.Mesh(btnGeometry, btnMaterial);
-plane3.position.set(-2, 4, 10);
-plane3.rotation.y = Math.PI;
+const btn = new THREE.Mesh(btnGeometry, btnMaterial);
+btn.position.set(-2, 4, 10);
+btn.rotation.y = Math.PI;
+btn.castShadow = true;
 console.log(btnMaterial);
-scene.add(plane3);
+scene.add(btn);
 
-const sphereGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+const sphereGeometry = new THREE.SphereGeometry(0.8, 16, 16);
 const sphereMaterial = new THREE.MeshStandardMaterial({
 	color: "white",
-	side: THREE.DoubleSide
+	side: THREE.DoubleSide,
+	opacity: 0.2,
+	transparent: true,
+	wireframe: true
 });
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.castShadow = true;
 sphere.receiveShadow = true;
-sphere.position.set(-3, 1, 9);
+sphere.position.set(-9, 5, 13);
+sphere.scale.set(2, 2, 2);
 sphere.name = "버튼";
 scene.add(sphere);
 	
@@ -221,6 +228,7 @@ function checkIntersects() {
 	console.log(intersects[0].object.name);
 
 	if (intersects[0].object.name == "버튼") {
+		document.body.style.overflow = "visible";
 		gsap.to(
 			camera.rotation,
 			{
@@ -245,6 +253,8 @@ const clock = new THREE.Clock();
 
 function draw() {
 	const delta = clock.getDelta();
+	sphere.rotation.z += Math.PI / 180;
+	sphere.rotation.y += Math.PI / 180;
 
 	if (mixer) mixer.update(delta);
 
