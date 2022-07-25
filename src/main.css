@@ -11,25 +11,47 @@ body::-webkit-scrollbar {
 	position: fixed;
 	left: 0;
 	top: 0;
-	z-index: 1;
+	z-index: -1;
 }
 
 .sections {
 	position: relative;
+	z-index: -1;
 }
-
 .section {
 	box-sizing: border-box;
 	padding: 5rem;
 	height: 100vh;
-	z-index: -1;
+}
+.btnContainer {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+.btn {
+  display: inline-block;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 15px;
+  letter-spacing: 0.3em;
+  color: rgba(19, 56, 130, 0.7);
+  border-radius: 20px;
+  padding: 13px 20px;
+  transition: all 0.7s ease-out;
+  background: linear-gradient(270deg, rgba(93, 106, 219, 0.8), rgba(15, 15, 202, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  margin: 0.625rem;
+  border: none;
+  border: 1px solid rgba(19, 56, 130, 0.7);
+	cursor: pointer;
 }
 
-.section h2 {
-	margin: 0;
-	font-size: 10vmin;
-}
-
-.section:nth-child(odd) {
-	text-align: right;
+.btn:hover {
+  color: #fff;
+  border: 1px solid rgba(223,190,106,0);
+  color: white;
+  background-position: 99% 50%;
 }

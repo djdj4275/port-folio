@@ -129,52 +129,28 @@ let mixer;
 		}, 1000);
 	});
 
-const planeGeometry = new THREE.PlaneGeometry(40, 15);
+const floorTexture = textureLoader.load('/models/checkboard.jpg');
+const planeGeometry = new THREE.PlaneGeometry(15, 15);
+const floorMaterial = new THREE.MeshStandardMaterial({
+	side: THREE.DoubleSide,
+	map: floorTexture,
+});
 const planeMaterial = new THREE.MeshStandardMaterial({
 	color: "royalblue",
 	side: THREE.DoubleSide,
+	transparent: true,
+	opacity: 0.3,
 });
-const plane1 = new THREE.Mesh(planeGeometry, planeMaterial);
+const plane1 = new THREE.Mesh(planeGeometry, floorMaterial);
 const plane2 = new THREE.Mesh(planeGeometry, planeMaterial);
 plane1.rotation.x = -Math.PI * 0.5;
 plane1.position.set(0, -1, 15);
 plane2.position.set(0, 4, 15);
 plane1.receiveShadow = true;
-plane2.receiveShadow = true;
 scene.add(plane1, plane2);
 
-const btnGeometry = new THREE.TorusGeometry(0.8, 0.1, 16, 16);
-const btnMaterial = new THREE.MeshStandardMaterial({
-	color: "skyblue",
-	opacity: 0.4,
-	transparent: true,
-	wireframe: true
-})
-
-const btn = new THREE.Mesh(btnGeometry, btnMaterial);
-btn.position.set(-2, 4, 10);
-btn.rotation.y = Math.PI;
-btn.castShadow = true;
-console.log(btnMaterial);
-scene.add(btn);
-
-const sphereGeometry = new THREE.SphereGeometry(0.8, 16, 16);
-const sphereMaterial = new THREE.MeshStandardMaterial({
-	color: "white",
-	side: THREE.DoubleSide,
-	opacity: 0.2,
-	transparent: true,
-	wireframe: true
-});
-const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-sphere.castShadow = true;
-sphere.receiveShadow = true;
-sphere.position.set(-9, 5, 13);
-sphere.scale.set(2, 2, 2);
-sphere.name = "버튼";
-scene.add(sphere);
-	
 const loader = new FontLoader();
+
 loader.load('./models/Dongle Light.json',
 	(font) => {
 		const textGeometry = new TextGeometry('안녕하세요\n저는 웹 프론트엔드 개발자\n김준용입니다.',
@@ -192,12 +168,12 @@ loader.load('./models/Dongle Light.json',
 		);
 		textGeometry.center();
 
-		const material = new THREE.MeshStandardMaterial({
+		const textMaterial = new THREE.MeshStandardMaterial({
 			color: "white",
 			roughness: 0.1,
 			metalness: 0.1
 		});
-		const textMesh = new THREE.Mesh(textGeometry, material);
+		const textMesh = new THREE.Mesh(textGeometry, textMaterial);
 		textMesh.scale.set(2, 2, 2);
 		textMesh.position.set(-3, 2, 10);
 		textMesh.castShadow = true;
@@ -221,40 +197,21 @@ canvas.addEventListener('click', (e) => {
 	checkIntersects();
 });
 
+let division = false;
+
 function checkIntersects() {
 	raycaster.setFromCamera(mouse, camera);
 
 	const intersects = raycaster.intersectObjects(scene.children);
 	console.log(intersects[0].object.name);
-
-	if (intersects[0].object.name == "버튼") {
-		document.body.style.overflow = "visible";
-		gsap.to(
-			camera.rotation,
-			{
-				duration: 1,
-				y: 0,
-			}
-		);
-		gsap.to(
-			camera.position,
-			{
-				duration: 1,
-				x: -2,
-				y: 2,
-				z: 1,
-			}
-		);
-	}
 }
+
 
 // 그리기 (시간)
 const clock = new THREE.Clock();
 
 function draw() {
 	const delta = clock.getDelta();
-	sphere.rotation.z += Math.PI / 180;
-	sphere.rotation.y += Math.PI / 180;
 
 	if (mixer) mixer.update(delta);
 
@@ -287,6 +244,61 @@ function setSize() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.render(scene, camera);
 }
+
+const btnContainer = document.createElement('div');
+btnContainer.classList.add('btnContainer');
+
+const Btn1 = document.createElement("button");
+Btn1.classList.add('btn');
+Btn1.innerHTML = '처음으로';
+Btn1.onclick = () => {
+	document.body.style.overflow = "hidden";
+		gsap.to(
+			camera.rotation,
+			{
+				duration: 1,
+				y: Math.PI,
+			}
+		);
+		gsap.to(
+			camera.position,
+			{
+				duration: 1,
+				x: -0.5,
+				y: 2,
+				z: 5,
+			}
+		);
+}
+	
+btnContainer.append(Btn1);
+
+const Btn2 = document.createElement("button");
+Btn2.classList.add('btn');
+Btn2.innerHTML = '프로젝트 보러가기';
+btnContainer.append(Btn2);
+Btn2.onclick = () => {
+	console.log(document.body.style);
+	document.body.style.overflow = "visible";
+		gsap.to(
+			camera.rotation,
+			{
+				duration: 1,
+				y: 0,
+			}
+		);
+		gsap.to(
+			camera.position,
+			{
+				duration: 1,
+				x: -2,
+				y: 2,
+				z: 1,
+			}
+		);
+}
+
+document.body.append(btnContainer);
 
 // 이벤트
 window.addEventListener('scroll',
