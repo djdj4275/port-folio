@@ -57,13 +57,25 @@ scene.add(camera);
 const ambientLight = new THREE.AmbientLight('white', 1);
 scene.add(ambientLight);
 
+// const reallight1 = new THREE.SpotLight('orange', 10, 50, Math.PI / 5);
+const reallight2 = new THREE.SpotLight('skyblue', 10, 40, Math.PI / 4.5);
+// reallight1.castShadow = true;
+// reallight1.position.set(5, 1, 1.5);
+reallight2.castShadow = true;
+reallight2.position.set(2, 1, 0);
+// reallight1.shadow.mapSize.width = 1024;
+// reallight1.shadow.mapSize.height = 1024;
+reallight2.shadow.mapSize.width = 1024;
+reallight2.shadow.mapSize.height = 1024;
+scene.add(reallight2);
+
 // const spotLight = new THREE.SpotLight('white', 1, 30, Math.PI / 6);
 // scene.add(spotLight);
 
 // const gui = new dat.GUI();
-//    gui.add(spotLight.position, "y", -300, 300, 0.01).name('메쉬의 y위치');
-//    gui.add(spotLight.position, "z", -200, 200, 0.01).name('메쉬의 z위치');
-//    gui.add(spotLight.position, "x", -200, 200, 0.01).name('카메라의 x위치');
+//    gui.add(reallight2.position, "y", -300, 300, 0.01).name('메쉬의 y위치');
+//    gui.add(reallight2.position, "z", -200, 200, 0.01).name('메쉬의 z위치');
+//    gui.add(reallight2.position, "x", -200, 200, 0.01).name('카메라의 x위치');
 
 
 const gltfLoader = new GLTFLoader();
@@ -110,11 +122,17 @@ boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, 
 let mixer;
 
 	gltfLoader.load("/models/practiceblended.glb", (gltf) => {
-		const practiceMesh = gltf.scene.children[0];
+		const practiceMesh = gltf.scene;
 		practiceMesh.position.set(3, 1, 10);
 		practiceMesh.rotation.y = Math.PI*0.2;
 		practiceMesh.scale.set(4, 4, 4);
-		practiceMesh.castShadow = true;
+		practiceMesh.traverse(function (child) {
+			if (child.isMesh) {
+				child.material.shading = THREE.SmoothShading;
+				child.castShadow = true;
+				child.receiveShadow = true;
+			}
+		})
     scene.add(practiceMesh);
 
     mixer = new THREE.AnimationMixer(practiceMesh);
@@ -126,62 +144,93 @@ let mixer;
 		actions[1].clampWhenFinished = true;
 		setTimeout(() => {
 			actions[1].play();
+			reallight2.target = plane1;
 		}, 1000);
 	});
 
-const floorTexture = textureLoader.load('/models/checkboard.jpg');
-const planeGeometry = new THREE.PlaneGeometry(15, 15);
+// const floorTexture = textureLoader.load('/models/checkboard.jpg');
+const planeGeometry1 = new THREE.PlaneGeometry(50, 20);
+const planeGeometry2 = new THREE.PlaneGeometry(80, 50);
 const floorMaterial = new THREE.MeshStandardMaterial({
 	side: THREE.DoubleSide,
-	map: floorTexture,
-});
-const planeMaterial = new THREE.MeshStandardMaterial({
-	color: "royalblue",
-	side: THREE.DoubleSide,
+	color: "skyblue",
 	transparent: true,
 	opacity: 0.3,
 });
-const plane1 = new THREE.Mesh(planeGeometry, floorMaterial);
-const plane2 = new THREE.Mesh(planeGeometry, planeMaterial);
+const plane1 = new THREE.Mesh(planeGeometry1, floorMaterial);
+plane1.receiveShadow = true;
+const plane2 = new THREE.Mesh(planeGeometry2, floorMaterial);
+plane2.receiveShadow = true;
 plane1.rotation.x = -Math.PI * 0.5;
 plane1.position.set(0, -1, 15);
-plane2.position.set(0, 4, 15);
+plane2.position.set(0, 24, 25);
 plane1.receiveShadow = true;
 scene.add(plane1, plane2);
 
 const loader = new FontLoader();
+const fontJson = require("./models/Dongle Light.json");
+const font = loader.parse(fontJson);
 
-loader.load('./models/Dongle Light.json',
-	(font) => {
-		const textGeometry = new TextGeometry('안녕하세요\n저는 웹 프론트엔드 개발자\n김준용입니다.',
-			{
-				font: font,
-				size: 0.3,
-				height: 0,
-				curveSegments: 12,
-				bevelEnabled: true,
-				bevelThickness: 0.01,
-				bevelSize: 0.001,
-				bevelOffset: 0.01,
-				bevelSegments: 24
-			}
-		);
-		textGeometry.center();
-
-		const textMaterial = new THREE.MeshStandardMaterial({
-			color: "white",
-			roughness: 0.1,
-			metalness: 0.1
-		});
-		const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-		textMesh.scale.set(2, 2, 2);
-		textMesh.position.set(-3, 2, 10);
-		textMesh.castShadow = true;
-		textMesh.rotation.y = Math.PI;
-
-		scene.add(textMesh);
+const textGeometry1 = new TextGeometry(
+	'안녕하세요\n프론트엔드 개발자 김준용입니다.\n현재 보고계시는 사이트는\n포트폴리오 목적으로 제작된 사이트이며\n저에 대한 설명과 제가 참여한 프로젝트들을\n보여드리기 위하여 제작되었습니다.\n위에 보이는 프로젝트 보러가기 버튼을\n통해 확인 하실 수 있습니다',
+	{
+		font: font,
+		size: 0.2,
+		height: 0,
+		curveSegments: 12,
+		bevelEnabled: true,
+		bevelThickness: 0.001,
+		bevelSize: 0.001,
+		bevelOffset: 0.001,
+		bevelSegments: 12
 	}
 );
+textGeometry1.center();
+
+const textMaterial1 = new THREE.MeshStandardMaterial({
+	color: "black",
+	roughness: 0.1,
+	metalness: 0.1,
+	transparent: true,
+});
+const textMesh1 = new THREE.Mesh(textGeometry1, textMaterial1);
+		textMesh1.scale.set(2, 2, 2);
+		textMesh1.position.set(-3, 2, 10);
+		textMesh1.rotation.y = Math.PI;
+
+scene.add(textMesh1);
+
+const textGeometry2 = new TextGeometry(
+	'hello',
+	{
+		font: font,
+		size: 0.2,
+		height: 0,
+		curveSegments: 12,
+		bevelEnabled: true,
+		bevelThickness: 0.001,
+		bevelSize: 0.001,
+		bevelOffset: 0.001,
+		bevelSegments: 12
+	}
+);
+textGeometry2.center();
+
+const textMaterial2 = new THREE.MeshStandardMaterial({
+	color: "black",
+	roughness: 0.1,
+	metalness: 0.1,
+	transparent: true,
+	opacity: 0,
+});
+const textMesh2 = new THREE.Mesh(textGeometry2, textMaterial2);
+		textMesh2.scale.set(2, 2, 2);
+		textMesh2.position.set(-3, 2, 10);
+		textMesh2.rotation.y = Math.PI;
+
+scene.add(textMesh2);
+
+
 
 // raycaster
 const raycaster = new THREE.Raycaster();
@@ -197,13 +246,11 @@ canvas.addEventListener('click', (e) => {
 	checkIntersects();
 });
 
-let division = false;
-
 function checkIntersects() {
 	raycaster.setFromCamera(mouse, camera);
 
 	const intersects = raycaster.intersectObjects(scene.children);
-	console.log(intersects[0].object.name);
+	// console.log(intersects[0].object);
 }
 
 
@@ -225,11 +272,10 @@ function setSection() {
 	const newSection = Math.round(window.scrollY / window.innerHeight);
 
 	if (currentSection !== newSection) {
-		gsap.to(
-			camera.position,
+		gsap.to(camera.position,
 			{
 				duration: 1,
-				x: houses[newSection].x+3,
+				x: houses[newSection].x + 3,
 				y: houses[newSection].y+1,
 				z: houses[newSection].z+6,
 			}
@@ -245,60 +291,63 @@ function setSize() {
 	renderer.render(scene, camera);
 }
 
-const btnContainer = document.createElement('div');
-btnContainer.classList.add('btnContainer');
+const btnContainer1 = document.createElement('div');
+btnContainer1.classList.add('fixbtnContainer');
 
 const Btn1 = document.createElement("button");
-Btn1.classList.add('btn');
+Btn1.classList.add('fixbtn');
 Btn1.innerHTML = '처음으로';
 Btn1.onclick = () => {
 	document.body.style.overflow = "hidden";
-		gsap.to(
-			camera.rotation,
-			{
-				duration: 1,
-				y: Math.PI,
-			}
-		);
-		gsap.to(
-			camera.position,
-			{
-				duration: 1,
-				x: -0.5,
-				y: 2,
-				z: 5,
-			}
-		);
+	gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
+	gsap.to(camera.position,{duration: 1,x: -0.5,y: 2,z: 5,});
 }
 	
-btnContainer.append(Btn1);
+btnContainer1.append(Btn1);
 
 const Btn2 = document.createElement("button");
-Btn2.classList.add('btn');
+Btn2.classList.add('fixbtn');
 Btn2.innerHTML = '프로젝트 보러가기';
-btnContainer.append(Btn2);
+btnContainer1.append(Btn2);
+
 Btn2.onclick = () => {
-	console.log(document.body.style);
+	window.scrollTo(0,0);
 	document.body.style.overflow = "visible";
-		gsap.to(
-			camera.rotation,
-			{
-				duration: 1,
-				y: 0,
-			}
-		);
-		gsap.to(
-			camera.position,
-			{
-				duration: 1,
-				x: -2,
-				y: 2,
-				z: 1,
-			}
-		);
+	gsap.to(camera.rotation,{duration: 1,y: 0,});
+	gsap.to(camera.position,{duration: 1,x: -2,y: 2,z: 1,});
 }
 
-document.body.append(btnContainer);
+document.body.append(btnContainer1);
+
+const btnContainer2 = document.createElement('div');
+btnContainer2.classList.add('btnContainer');
+const Btn3 = document.createElement("button");
+const Btn4 = document.createElement("button");
+const Btn5 = document.createElement("button");
+Btn3.classList.add('btn');
+Btn4.classList.add('btn');
+Btn5.classList.add('btn');
+Btn3.innerHTML = '사이트 소개';
+Btn4.innerHTML = '자기 소개';
+Btn5.innerHTML = '보유기술 보기';
+btnContainer2.append(Btn3, Btn4, Btn5);
+document.body.append(btnContainer2);
+
+Btn3.onclick = () => {
+	textMesh1.position.y = 6;
+	gsap.to(textMesh1.position, { duration: 0.3, y: 2 });
+	gsap.to(textMesh2.position, { duration: 0.3, y: -2 });
+	gsap.to(textMesh1.material, { duration: 0.3, opacity: 1, });
+	gsap.to(textMesh2.material,{duration: 0.3,opacity: 0,});
+}
+
+Btn4.onclick = () => {
+	textMesh2.position.y = 6;
+	gsap.to(textMesh1.position, { duration: 0.3, y: -2 });
+	gsap.to(textMesh2.position,{duration: 0.3,y: 2});
+	gsap.to(textMesh1.material, { duration: 0.3, opacity: 0, });
+	gsap.to(textMesh2.material, { duration: 0.3, opacity: 1, });
+}
 
 // 이벤트
 window.addEventListener('scroll',
