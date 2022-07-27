@@ -8,6 +8,8 @@ import gsap from 'gsap';
 import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
 import dat from 'dat.gui';
 import { PreventDragClick } from './PreventDragClick';
+import { Stack } from './Stack';
+import * as CANNON from 'cannon-es';
 
 // Renderer
 const canvas = document.querySelector('#three-canvas');
@@ -253,19 +255,6 @@ function checkIntersects() {
 	// console.log(intersects[0].object);
 }
 
-
-// 그리기 (시간)
-const clock = new THREE.Clock();
-
-function draw() {
-	const delta = clock.getDelta();
-
-	if (mixer) mixer.update(delta);
-
-	renderer.render(scene, camera);
-	renderer.setAnimationLoop(draw);
-}
-
 let currentSection = 0;
 function setSection() {
 	// window.pageYOffset
@@ -347,6 +336,61 @@ Btn4.onclick = () => {
 	gsap.to(textMesh2.position,{duration: 0.3,y: 2});
 	gsap.to(textMesh1.material, { duration: 0.3, opacity: 0, });
 	gsap.to(textMesh2.material, { duration: 0.3, opacity: 1, });
+}
+
+const cannonWorld = new CANNON.World();
+cannonWorld.gravity.set(0, -9.8, 0);
+
+const defaultMaterial = new CANNON.Material('default');
+
+const floorShape = new CANNON.Plane();
+const floorBody = new CANNON.Body({
+	mass: 0,
+	position: new CANNON.Vec3(0, -1, 15),
+	shape: floorShape,
+	material: defaultMaterial
+});
+floorBody.quaternion.setFromAxisAngle(
+	new CANNON.Vec3(-1, 0, 0),
+	Math.PI / 2
+);
+cannonWorld.addBody(floorBody);
+
+const stacks = [];
+let stack;
+
+Btn5.onclick = () => { 
+	for (let i = 0; i < 17; i++) {
+		stack = new Stack({
+			scene: scene,
+      cannonWorld,
+      geometry: sphereGeometry,
+      material: sphereMaterial,
+      x: (Math.random() - 0.5) * 2,
+      y: Math.random() * 5 + 2,
+      z: (Math.random() - 0.5) * 2,
+      scale: Math.random() + 0.2,
+		});
+		stacks.push(stack);
+	}
+}
+
+// 그리기 (시간)
+const clock = new THREE.Clock();
+
+function draw() {
+	const delta = clock.getDelta();
+
+	let cannonStepTime = 1 / 60;
+	if (delta < 0.01) cannonStepTime = 1 / 120;
+
+	cannonWorld.step(cannonStepTime, delta, 3);
+	plane1.position.copy(floorBody.position);
+
+	if (mixer) mixer.update(delta);
+
+	renderer.render(scene, camera);
+	renderer.setAnimationLoop(draw);
 }
 
 // 이벤트
