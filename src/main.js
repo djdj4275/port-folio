@@ -322,7 +322,13 @@ Btn5.innerHTML = '보유기술 보기';
 btnContainer2.append(Btn3, Btn4, Btn5);
 document.body.append(btnContainer2);
 
+const stacks = [];
+
 Btn3.onclick = () => {
+	stacks.forEach(item => {
+		cannonWorld.removeBody(item.cannonBody);
+		scene.remove(item.mesh);
+	});
 	textMesh1.position.y = 6;
 	gsap.to(textMesh1.position, { duration: 0.3, y: 2 });
 	gsap.to(textMesh2.position, { duration: 0.3, y: -2 });
@@ -331,6 +337,10 @@ Btn3.onclick = () => {
 }
 
 Btn4.onclick = () => {
+	stacks.forEach(item => {
+		cannonWorld.removeBody(item.cannonBody);
+		scene.remove(item.mesh);
+	});
 	textMesh2.position.y = 6;
 	gsap.to(textMesh1.position, { duration: 0.3, y: -2 });
 	gsap.to(textMesh2.position,{duration: 0.3,y: 2});
@@ -356,7 +366,9 @@ floorBody.quaternion.setFromAxisAngle(
 );
 cannonWorld.addBody(floorBody);
 
-const stacks = [];
+// math.random = 0~1의 난수
+// math.random() * (최댓값-최소값+1) + 최소값
+const stackGeometry = new THREE.BoxGeometry(1, 1, 1);
 let stack;
 
 Btn5.onclick = () => { 
@@ -364,12 +376,12 @@ Btn5.onclick = () => {
 		stack = new Stack({
 			scene: scene,
       cannonWorld,
-      geometry: sphereGeometry,
-      material: sphereMaterial,
-      x: (Math.random() - 0.5) * 2,
-      y: Math.random() * 5 + 2,
-      z: (Math.random() - 0.5) * 2,
-      scale: Math.random() + 0.2,
+			geometry: stackGeometry,
+			index: i,
+      x: Math.random() * -8,
+      y: Math.random() * (10-6+1) + 6,
+			z: Math.random() * (15 - 10 + 1) + 10,
+			rotation: Math.PI*Math.random()
 		});
 		stacks.push(stack);
 	}
@@ -386,6 +398,11 @@ function draw() {
 
 	cannonWorld.step(cannonStepTime, delta, 3);
 	plane1.position.copy(floorBody.position);
+
+	stacks.forEach(item => {
+		item.mesh.position.copy(item.cannonBody.position);
+		item.mesh.quaternion.copy(item.cannonBody.quaternion);
+	})
 
 	if (mixer) mixer.update(delta);
 
