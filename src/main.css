@@ -85,3 +85,28 @@ body::-webkit-scrollbar {
   color: white;
   background-position: 99% 50%;
 }
+
+.stackInformation {
+	position: fixed;
+	left: 100%;
+	top: 15%;
+	width: 600px;
+	height: 500px;
+	color: white;
+	background: rgba(0, 0, 0, 0.7);
+	transition-duration: 1s;
+}
+
+.stackInformation h2 {
+	text-align: center;
+}
+
+.stackInformation ul {
+	display: inline-block;
+	width: 40%;
+	font-size: 15px;
+}
+
+.stackInformation ul:nth-child(2) {
+	width: 100%;
+}

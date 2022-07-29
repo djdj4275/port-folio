@@ -34,7 +34,6 @@ export class Stack {
     this.scene.add(this.mesh);
 
     this.setCannonBody();
-    console.log(this.rotation);
   }
 
   setCannonBody() {

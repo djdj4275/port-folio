@@ -372,6 +372,12 @@ const stackGeometry = new THREE.BoxGeometry(1, 1, 1);
 let stack;
 
 Btn5.onclick = () => { 
+	console.log(document.getElementsByClassName('stackInformation')[0].style);
+	document.getElementsByClassName('stackInformation')[0].style.left = "50%"
+	gsap.to(textMesh1.position, { duration: 0.5, y: -2 });
+	gsap.to(textMesh2.position, { duration: 0.5, y: -2 });
+	gsap.to(textMesh1.material, { duration: 0.3, opacity: 0, });
+	gsap.to(textMesh2.material, { duration: 0.3, opacity: 0, });
 	for (let i = 0; i < 17; i++) {
 		stack = new Stack({
 			scene: scene,
