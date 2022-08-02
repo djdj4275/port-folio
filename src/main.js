@@ -287,6 +287,7 @@ const Btn1 = document.createElement("button");
 Btn1.classList.add('fixbtn');
 Btn1.innerHTML = '처음으로';
 Btn1.onclick = () => {
+	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
 	document.body.style.overflow = "hidden";
 	gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
 	gsap.to(camera.position,{duration: 1,x: -0.5,y: 2,z: 5,});
@@ -300,6 +301,7 @@ Btn2.innerHTML = '프로젝트 보러가기';
 btnContainer1.append(Btn2);
 
 Btn2.onclick = () => {
+	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
 	window.scrollTo(0,0);
 	document.body.style.overflow = "visible";
 	gsap.to(camera.rotation,{duration: 1,y: 0,});
@@ -325,6 +327,7 @@ document.body.append(btnContainer2);
 const stacks = [];
 
 Btn3.onclick = () => {
+	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
 	stacks.forEach(item => {
 		cannonWorld.removeBody(item.cannonBody);
 		scene.remove(item.mesh);
@@ -337,6 +340,7 @@ Btn3.onclick = () => {
 }
 
 Btn4.onclick = () => {
+	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
 	stacks.forEach(item => {
 		cannonWorld.removeBody(item.cannonBody);
 		scene.remove(item.mesh);
@@ -371,8 +375,7 @@ cannonWorld.addBody(floorBody);
 const stackGeometry = new THREE.BoxGeometry(1, 1, 1);
 let stack;
 
-Btn5.onclick = () => { 
-	console.log(document.getElementsByClassName('stackInformation')[0].style);
+Btn5.onclick = () => {
 	document.getElementsByClassName('stackInformation')[0].style.left = "50%"
 	gsap.to(textMesh1.position, { duration: 0.5, y: -2 });
 	gsap.to(textMesh2.position, { duration: 0.5, y: -2 });
