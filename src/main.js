@@ -97,18 +97,18 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 // scene.add(floorMesh);
 
 const houses = [];
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5,y: 1, z: -5, index: 1}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 7,y: 1, z: -25, index: 2}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -10,y: 1, z: -45, index: 3}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 10,y: 1, z: -65, index: 4}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5, y: 1, z: -85, index: 5}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5,y: 0, z: -5, index: 1}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 7,y: 0, z: -25, index: 2}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -10,y: 0, z: -45, index: 3}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 10,y: 0, z: -65, index: 4}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5, y: 0, z: -85, index: 5}));
 
 const boards = [];
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5,y: 1, z: -5, index: 1}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 7,y: 1, z: -25, index: 2}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -10,y: 1, z: -45, index: 3}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 10,y: 1, z: -65, index: 4}));
-boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5, y: 1, z: -85, index: 5}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5,y: 0, z: -5, index: 1}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 7,y: 0, z: -25, index: 2}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -10,y: 0, z: -45, index: 3}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: 10,y: 0, z: -65, index: 4}));
+boards.push(new Board({ textureLoader, modelSrc: '/models/Plumbago.jpg', scene, x: -5, y: 0, z: -85, index: 5}));
 
 // const cubeMaterial = new THREE.MeshBasicMaterial({
 // 	envMap: cubeTexture,
@@ -256,16 +256,22 @@ function checkIntersects() {
 }
 
 let currentSection = 0;
+const Modals = document.querySelectorAll('.projectModal');
+
 function setSection() {
 	// window.pageYOffset
 	const newSection = Math.round(window.scrollY / window.innerHeight);
 
 	if (currentSection !== newSection) {
+		for (const Modal of Modals) {
+			Modal.style.right = "-100%";
+		}
+		document.querySelector(`.modal${newSection}`).style.right = "0%";
 		gsap.to(camera.position,
 			{
 				duration: 1,
 				x: houses[newSection].x + 3,
-				y: houses[newSection].y+1,
+				y: houses[newSection].y+2,
 				z: houses[newSection].z+6,
 			}
 		);
@@ -303,6 +309,9 @@ Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	for (const Modal of Modals) {
+		Modal.style.right = "-100%";
+	}
 	btnContainer2.style.opacity = 1;
 	btnContainer2.style.zIndex = 1;
 	Btn1.style.opacity = 0;
@@ -329,6 +338,7 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	document.getElementsByClassName('projectModal')[0].style.right = "0%"
 	btnContainer2.style.opacity = 0;
 	btnContainer2.style.zIndex = -1;
 	Btn1.style.opacity = 1;

@@ -148,3 +148,38 @@ body::-webkit-scrollbar {
 .overlayTextBox span {
   animation: blink 1s infinite alternate;
 }
+
+.projectModal {
+  position: fixed;
+  top: 12%;
+  right: -100%;
+  width: 500px;
+  height: 600px;
+  border-radius: 20px 0px 0px 20px;
+  transition-duration: 1s;
+}
+
+.modal0 {
+  background-color: rgba(19, 56, 130, 0.7);
+  border: 1px solid white;
+}
+
+.modal1 {
+  background-color: rgba(19, 56, 130, 0.7);
+  border: 1px solid white;
+}
+
+.modal2 {
+  background-color: rgba(19, 56, 130, 0.7);
+  border: 1px solid white;
+}
+
+.modal3 {
+  background-color: rgba(19, 56, 130, 0.7);
+  border: 1px solid white;
+}
+
+.modal4 {
+  background-color: rgba(19, 56, 130, 0.7);
+  border: 1px solid white;
+}
