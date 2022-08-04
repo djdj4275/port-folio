@@ -113,6 +113,14 @@ body::-webkit-scrollbar {
 	font-size: 15px;
 }
 
+.stackInformation ul:nth-child(2) {
+  color: gold;
+}
+
+.stackInformation ul:nth-child(3) {
+  color: gold;
+}
+
 .stackInformation ul:nth-child(4) {
   list-style: square;
 	width: 90%;
