@@ -282,32 +282,6 @@ function setSize() {
 
 const btnContainer1 = document.createElement('div');
 btnContainer1.classList.add('fixbtnContainer');
-
-const Btn1 = document.createElement("button");
-Btn1.classList.add('fixbtn');
-Btn1.innerHTML = '처음으로';
-Btn1.onclick = () => {
-	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
-	document.body.style.overflow = "hidden";
-	gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
-	gsap.to(camera.position,{duration: 1,x: -0.5,y: 2,z: 5,});
-}
-	
-btnContainer1.append(Btn1);
-
-const Btn2 = document.createElement("button");
-Btn2.classList.add('fixbtn');
-Btn2.innerHTML = '프로젝트 보러가기';
-btnContainer1.append(Btn2);
-
-Btn2.onclick = () => {
-	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
-	window.scrollTo(0,0);
-	document.body.style.overflow = "visible";
-	gsap.to(camera.rotation,{duration: 1,y: 0,});
-	gsap.to(camera.position,{duration: 1,x: -2,y: 2,z: 1,});
-}
-
 document.body.append(btnContainer1);
 
 const btnContainer2 = document.createElement('div');
@@ -315,8 +289,8 @@ btnContainer2.classList.add('btnContainer');
 const Btn3 = document.createElement("button");
 const Btn4 = document.createElement("button");
 const Btn5 = document.createElement("button");
-Btn3.classList.add('btn');
-Btn4.classList.add('btn');
+Btn3.classList.add('btn', 'stackDelete');
+Btn4.classList.add('btn', 'stackDelete');
 Btn5.classList.add('btn');
 Btn3.innerHTML = '사이트 소개';
 Btn4.innerHTML = '자기 소개';
@@ -324,14 +298,59 @@ Btn5.innerHTML = '보유기술 보기';
 btnContainer2.append(Btn3, Btn4, Btn5);
 document.body.append(btnContainer2);
 
+const Btn1 = document.createElement("button");
+Btn1.classList.add('fixbtn', 'stackDelete');
+Btn1.innerHTML = '처음으로';
+Btn1.style.opacity = 0;
+Btn1.onclick = () => {
+	btnContainer2.style.opacity = 1;
+	btnContainer2.style.zIndex = 1;
+	Btn1.style.opacity = 0;
+	Btn2.style.opacity = 1;
+	Btn1.style.zIndex = -1;
+	Btn2.style.zIndex = 1;
+	document.body.style.overflow = "hidden";
+	gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
+	gsap.to(camera.position, { duration: 1, x: -0.5, y: 2, z: 5, });
+	textMesh1.position.y = 6;
+	gsap.to(textMesh1.position, { duration: 0.3, y: 2 });
+	gsap.to(textMesh2.position, { duration: 0.3, y: -2 });
+	gsap.to(textMesh1.material, { duration: 0.3, opacity: 1, });
+	gsap.to(textMesh2.material,{duration: 0.3,opacity: 0,});
+}
+	
+btnContainer1.append(Btn1);
+
+const Btn2 = document.createElement("button");
+Btn2.classList.add('fixbtn', 'stackDelete');
+Btn2.innerHTML = '프로젝트 보러가기';
+btnContainer1.append(Btn2);
+
+const overlay = document.querySelector('.projectOverlay');
+
+Btn2.onclick = () => {
+	btnContainer2.style.opacity = 0;
+	btnContainer2.style.zIndex = -1;
+	Btn1.style.opacity = 1;
+	Btn2.style.opacity = 0;
+	Btn1.style.zIndex = 1;
+	Btn2.style.zIndex = -1;
+	window.scrollTo(0,0);
+	document.body.style.overflow = "visible";
+	gsap.to(camera.rotation,{duration: 1,y: 0,});
+	gsap.to(camera.position, { duration: 1, x: -2, y: 2, z: 1, });
+	
+	overlay.style.zIndex = 1;
+	setTimeout(() => overlay.style.opacity = 1, 500);
+}
+
+overlay.onclick = () => {
+	overlay.style.display = 'none';
+}
+
 const stacks = [];
 
 Btn3.onclick = () => {
-	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
-	stacks.forEach(item => {
-		cannonWorld.removeBody(item.cannonBody);
-		scene.remove(item.mesh);
-	});
 	textMesh1.position.y = 6;
 	gsap.to(textMesh1.position, { duration: 0.3, y: 2 });
 	gsap.to(textMesh2.position, { duration: 0.3, y: -2 });
@@ -340,11 +359,6 @@ Btn3.onclick = () => {
 }
 
 Btn4.onclick = () => {
-	document.getElementsByClassName('stackInformation')[0].style.left = "100%"
-	stacks.forEach(item => {
-		cannonWorld.removeBody(item.cannonBody);
-		scene.remove(item.mesh);
-	});
 	textMesh2.position.y = 6;
 	gsap.to(textMesh1.position, { duration: 0.3, y: -2 });
 	gsap.to(textMesh2.position,{duration: 0.3,y: 2});
@@ -374,6 +388,18 @@ cannonWorld.addBody(floorBody);
 // math.random() * (최댓값-최소값+1) + 최소값
 const stackGeometry = new THREE.BoxGeometry(1, 1, 1);
 let stack;
+
+const stackDeletes = document.querySelectorAll('.stackDelete');
+
+for (const stackDelete of stackDeletes) {
+	stackDelete.addEventListener('click', () => {
+		document.getElementsByClassName('stackInformation')[0].style.left = "100%"
+		stacks.forEach(item => {
+			cannonWorld.removeBody(item.cannonBody);
+			scene.remove(item.mesh);
+		});
+	})
+}
 
 Btn5.onclick = () => {
 	document.getElementsByClassName('stackInformation')[0].style.left = "50%"
