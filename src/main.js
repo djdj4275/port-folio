@@ -257,14 +257,30 @@ function checkIntersects() {
 
 let currentSection = 0;
 const Modals = document.querySelectorAll('.projectModal');
+const projects = document.querySelectorAll('.projectBtn');
+let newSection;
 
-function setSection() {
+function setSection(e) {
 	// window.pageYOffset
-	const newSection = Math.round(window.scrollY / window.innerHeight);
+	newSection = Math.round(window.scrollY / window.innerHeight);
+
+	if (e.wheelDelta <= 0) {
+		for (const project of projects) { 
+			project.classList.remove(`project${newSection - 1}`);
+		}
+	}
+	else if (e.wheelDelta >= 0) {
+		for (const project of projects) { 
+			project.classList.remove(`project${newSection + 1}`);
+		}
+	}
 
 	if (currentSection !== newSection) {
 		for (const Modal of Modals) {
 			Modal.style.right = "-100%";
+		}
+		for (const project of projects) {
+			project.classList.add(`project${newSection}`);
 		}
 		document.querySelector(`.modal${newSection}`).style.right = "0%";
 		gsap.to(camera.position,
@@ -309,6 +325,9 @@ Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	for (const project of projects) { 
+		project.classList.remove(`project${newSection}`);
+	}
 	for (const Modal of Modals) {
 		Modal.style.right = "-100%";
 	}
@@ -339,6 +358,9 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	for (const project of projects) {
+		project.classList.add('project0');
+	}
 	document.getElementsByClassName('projectModal')[0].style.right = "0%"
 	btnContainer2.style.opacity = 0;
 	btnContainer2.style.zIndex = -1;
@@ -458,8 +480,8 @@ function draw() {
 }
 
 // 이벤트
-window.addEventListener('scroll',
-	setSection);
+window.addEventListener('mousewheel',
+	setSection); 
 window.addEventListener('resize', setSize);
 window.addEventListener('beforeunload', () => { 
 	window.scrollTo(0,0);

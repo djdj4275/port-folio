@@ -189,19 +189,106 @@ body::-webkit-scrollbar {
 }
 
 .sourceBtn {
-  display: inline-block;
-  position: fixed;
-  width: 100px;
-  height: 50px;
-  top: 8%;
-  border: 1px solid black;
+  left: 50px;
+  position: relative;
 }
 
 .pageBtn {
+  left: 220px;
+  position: relative;
+}
+
+.projectBtn {
   display: inline-block;
   position: fixed;
-  width: 100px;
+  width: 140px;
   height: 50px;
-  top: 8%;
-  border: 1px solid black;
+  top: 25px;
+  cursor: pointer;
+  font-size: 15px;
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.3em;
+  border-radius: 20px;
+  padding: 13px 20px;
+  transition: all 0.7s ease-out;
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  margin: 0.625rem;
+  border: none;
+  transition: all 1s;
+}
+
+.projectBtn:hover {
+  border: 2px solid white;
+  color: white;
+  background-position: 99% 50%;
+}
+
+.project0 {
+  border: 2px solid rgba(130, 19, 123, 0.7);
+  color: rgba(130, 19, 123, 0.7);
+  background: linear-gradient(270deg, rgba(209, 114, 214, 0.8), rgba(168, 15, 202, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+}
+
+.project1 {
+  border: 2px solid rgba(54, 19, 130, 0.7);
+  color: rgba(54, 19, 130, 0.7);
+  background: linear-gradient(270deg, rgba(119, 114, 214, 0.8), rgba(43, 15, 202, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+}
+
+.sourceBtn div {
+  position: absolute;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  font-size: 12px;
+}
+
+.sourceBtn .fa-code {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  font-size: 20px;
+}
+
+.sourceBtn:hover .fa-code{
+  opacity: 0;
+}
+
+.sourceBtn:hover div {
+  opacity: 1;
+}
+
+.pageBtn div {
+  position: absolute;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  font-size: 12px;
+}
+
+.pageBtn .fa-file {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  font-size: 20px;
+}
+
+.pageBtn:hover .fa-file{
+  opacity: 0;
+}
+
+.pageBtn:hover div {
+  opacity: 1;
 }
