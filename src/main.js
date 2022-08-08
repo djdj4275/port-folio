@@ -165,7 +165,7 @@ const plane2 = new THREE.Mesh(planeGeometry2, floorMaterial);
 plane2.receiveShadow = true;
 plane1.rotation.x = -Math.PI * 0.5;
 plane1.position.set(0, -1, 15);
-plane2.position.set(0, 24, 25);
+plane2.position.set(0, 499, 20);
 plane1.receiveShadow = true;
 scene.add(plane1, plane2);
 
