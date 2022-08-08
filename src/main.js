@@ -151,13 +151,13 @@ let mixer;
 	});
 
 // const floorTexture = textureLoader.load('/models/checkboard.jpg');
-const planeGeometry1 = new THREE.PlaneGeometry(50, 20);
-const planeGeometry2 = new THREE.PlaneGeometry(80, 50);
+const planeGeometry1 = new THREE.PlaneGeometry(1000, 20);
+const planeGeometry2 = new THREE.PlaneGeometry(1000, 1000);
 const floorMaterial = new THREE.MeshStandardMaterial({
 	side: THREE.DoubleSide,
 	color: "skyblue",
 	transparent: true,
-	opacity: 0.3,
+	opacity: 0.7,
 });
 const plane1 = new THREE.Mesh(planeGeometry1, floorMaterial);
 plane1.receiveShadow = true;
@@ -319,7 +319,8 @@ Btn1.onclick = () => {
 	Btn1.style.zIndex = -1;
 	Btn2.style.zIndex = 1;
 	document.body.style.overflow = "hidden";
-	gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
+	// gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
+	camera.rotation.y = Math.PI;
 	gsap.to(camera.position, { duration: 1, x: -0.5, y: 2, z: 5, });
 	textMesh1.position.y = 6;
 	gsap.to(textMesh1.position, { duration: 0.3, y: 2 });
@@ -347,7 +348,8 @@ Btn2.onclick = () => {
 	Btn2.style.zIndex = -1;
 	window.scrollTo(0,0);
 	document.body.style.overflow = "visible";
-	gsap.to(camera.rotation,{duration: 1,y: 0,});
+	camera.rotation.y = 0;
+	// gsap.to(camera.rotation,{duration: 1,y: 0,});
 	gsap.to(camera.position, { duration: 1, x: -2, y: 2, z: 1, });
 	
 	overlay.style.zIndex = 1;

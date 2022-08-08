@@ -157,7 +157,7 @@ body::-webkit-scrollbar {
   position: fixed;
   top: 12%;
   right: -100%;
-  width: 500px;
+  width: 600px;
   height: 600px;
   border-radius: 20px 0px 0px 20px;
   transition-duration: 1s;
@@ -186,4 +186,22 @@ body::-webkit-scrollbar {
 .modal4 {
   background-color: rgba(19, 56, 130, 0.7);
   border: 1px solid white;
+}
+
+.sourceBtn {
+  display: inline-block;
+  position: fixed;
+  width: 100px;
+  height: 50px;
+  top: 8%;
+  border: 1px solid black;
+}
+
+.pageBtn {
+  display: inline-block;
+  position: fixed;
+  width: 100px;
+  height: 50px;
+  top: 8%;
+  border: 1px solid black;
 }
