@@ -171,18 +171,18 @@ plane1.receiveShadow = true;
 scene.add(plane1, plane2);
 
 const loader = new FontLoader();
-const fontJson = require("./models/Dongle Light.json");
+const fontJson = require("./models/NanumMyeongjo_Regular.json");
 const font = loader.parse(fontJson);
 
 const textGeometry1 = new TextGeometry(
-	'안녕하세요\n프론트엔드 개발자 김준용입니다.\n현재 보고계시는 사이트는\n포트폴리오 목적으로 제작된 사이트이며\n저에 대한 설명과 제가 참여한 프로젝트들을\n보여드리기 위하여 제작되었습니다.\n위에 보이는 프로젝트 보러가기 버튼을\n통해 확인 하실 수 있습니다',
+	'안녕하세요\n\n프론트엔드 개발자 김준용입니다.\n\n현재 보고계시는 사이트는\n\n포트폴리오 목적으로 제작된 사이트이며\n\n저에 대한 설명과 제가 참여한 프로젝트들을\n\n보여드리기 위하여 제작되었습니다.\n\n위에 보이는 프로젝트 보러가기 버튼을\n\n통해 확인 하실 수 있습니다',
 	{
 		font: font,
-		size: 0.2,
+		size: 0.1,
 		height: 0,
 		curveSegments: 12,
 		bevelEnabled: true,
-		bevelThickness: 0.001,
+		bevelThickness: 0.002,
 		bevelSize: 0.001,
 		bevelOffset: 0.001,
 		bevelSegments: 12
@@ -264,26 +264,27 @@ let newSection;
 function setSection(e) {
 	let vh = window.innerHeight;
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
+	console.log(window.scrollY, newSection);
 	if (newSection > 4) {
 		newSection = 4;
 	}
 
-	if (e.wheelDelta <= 0) { // wheel down
-		for (const project of projects) {
-			// if (newSection != 4) {
-			// 	window.scrollY += vh/2;
-			// }
-			project.classList.remove(`project${newSection - 1}`);
+	if (window.scrollY != 0) {
+		if (e.wheelDelta <= 0) { // wheel down
+			for (const project of projects) {
+				project.classList.remove(`project${newSection - 1}`);
+			}
+			window.scrollTo(0, vh * newSection);
+		}
+		else if (e.wheelDelta >= 0) { // wheel up
+			for (const project of projects) {
+				project.classList.remove(`project${newSection + 1}`);
+			}
+			newSection -= 1;
+			window.scrollTo(0, vh * newSection);
 		}
 	}
-	else if (e.wheelDelta >= 0) { // wheel up
-		for (const project of projects) {
-			// if (newSection != 0) {
-			// 	window.scrollY -= vh/2;
-			// }
-			project.classList.remove(`project${newSection + 1}`);
-		}
-	}
+	
 
 	if (currentSection !== newSection) {
 		for (const Modal of Modals) {

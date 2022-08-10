@@ -163,29 +163,58 @@ body::-webkit-scrollbar {
   transition-duration: 1s;
 }
 
+.projectModal h1 {
+  text-align: center;
+  color: rgb(245, 196, 67);
+}
+
+.projectModal ul li:nth-child(4n+1) {
+  font-size: 20px;
+}
+
+.projectModal ul li:nth-child(4n+3) {
+  list-style: none;
+}
+
+.projectModal ol {
+  padding-left: 10px;
+}
+
+.projectModal div {
+  width: 90%;
+  margin: auto;
+}
+
+.projectModal span {
+  width: 90%;
+  margin: auto;
+  color: rgb(245, 196, 67);
+}
+
 .modal0 {
-  background-color: rgba(19, 56, 130, 0.7);
-  border: 1px solid white;
+  background-color: rgba(8, 14, 47, 0.7);
+  border: 2px solid rgb(245, 196, 67);
+  color: white;
 }
 
 .modal1 {
   background-color: rgba(19, 56, 130, 0.7);
-  border: 1px solid white;
+  border: 2px solid white;
 }
 
 .modal2 {
   background-color: rgba(19, 56, 130, 0.7);
-  border: 1px solid white;
+  border: 2px solid white;
 }
 
 .modal3 {
   background-color: rgba(19, 56, 130, 0.7);
-  border: 1px solid white;
+  border: 2px solid white;
 }
 
 .modal4 {
   background-color: rgba(19, 56, 130, 0.7);
-  border: 1px solid white;
+  border: 2px solid white;
 }
 
 .sourceBtn {
