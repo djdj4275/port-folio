@@ -263,8 +263,8 @@ let newSection;
 
 function setSection(e) {
 	let vh = window.innerHeight;
+	console.log(newSection);
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
-	console.log(window.scrollY, newSection);
 	if (newSection > 4) {
 		newSection = 4;
 	}
@@ -277,10 +277,10 @@ function setSection(e) {
 			window.scrollTo(0, vh * newSection);
 		}
 		else if (e.wheelDelta >= 0) { // wheel up
+			newSection -= 1;
 			for (const project of projects) {
 				project.classList.remove(`project${newSection + 1}`);
 			}
-			newSection -= 1;
 			window.scrollTo(0, vh * newSection);
 		}
 	}
@@ -374,13 +374,9 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
-	sourceBtn.style.top = "25px";
-	pageBtn.style.transitionDelay = "0.2s";
-	pageBtn.style.top = "25px";
 	for (const project of projects) {
 		project.classList.add('project0');
 	}
-	document.getElementsByClassName('projectModal')[0].style.right = "0%"
 	btnContainer2.style.opacity = 0;
 	btnContainer2.style.zIndex = -1;
 	Btn1.style.opacity = 1;
@@ -388,7 +384,6 @@ Btn2.onclick = () => {
 	Btn1.style.zIndex = 1;
 	Btn2.style.zIndex = -1;
 	window.scrollTo(0,0);
-	document.body.style.overflow = "visible";
 	camera.rotation.y = 0;
 	// gsap.to(camera.rotation,{duration: 1,y: 0,});
 	gsap.to(camera.position, { duration: 1, x: -2, y: 2, z: 1, });
@@ -399,6 +394,11 @@ Btn2.onclick = () => {
 
 overlay.onclick = () => {
 	overlay.style.display = 'none';
+	sourceBtn.style.top = "25px";
+	pageBtn.style.transitionDelay = "0.2s";
+	pageBtn.style.top = "25px";
+	document.body.style.overflow = "visible";
+	document.getElementsByClassName('projectModal')[0].style.right = "0%"
 }
 
 const stacks = [];
