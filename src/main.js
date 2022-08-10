@@ -262,15 +262,22 @@ let newSection;
 
 function setSection(e) {
 	// window.pageYOffset
-	newSection = Math.round(window.scrollY / window.innerHeight);
+	let vh = window.innerHeight;
+	newSection = Math.ceil(window.scrollY / window.innerHeight);
 
-	if (e.wheelDelta <= 0) {
-		for (const project of projects) { 
+	if (e.wheelDelta <= 0) { // wheel down
+		for (const project of projects) {
+			if (newSection != 4) {
+				window.scrollY += vh/10;
+			}
 			project.classList.remove(`project${newSection - 1}`);
 		}
 	}
-	else if (e.wheelDelta >= 0) {
-		for (const project of projects) { 
+	else if (e.wheelDelta >= 0) { // wheel up
+		for (const project of projects) {
+			if (newSection != 0) {
+				window.scrollY -= vh/10;
+			}
 			project.classList.remove(`project${newSection + 1}`);
 		}
 	}
@@ -302,6 +309,9 @@ function setSize() {
 	renderer.render(scene, camera);
 }
 
+const sourceBtn = document.querySelector('.sourceBtn');
+const pageBtn = document.querySelector('.pageBtn');
+
 const btnContainer1 = document.createElement('div');
 btnContainer1.classList.add('fixbtnContainer');
 document.body.append(btnContainer1);
@@ -325,6 +335,8 @@ Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	sourceBtn.style.top = "-100%";
+	pageBtn.style.top = "-100%";
 	for (const project of projects) { 
 		project.classList.remove(`project${newSection}`);
 	}
@@ -358,6 +370,9 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	sourceBtn.style.top = "25px";
+	pageBtn.style.transitionDelay = "0.2s";
+	pageBtn.style.top = "25px";
 	for (const project of projects) {
 		project.classList.add('project0');
 	}
