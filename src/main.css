@@ -40,7 +40,7 @@ body::-webkit-scrollbar {
   color: rgba(19, 56, 130, 0.7);
   border-radius: 20px;
   padding: 13px 20px;
-  transition: all 0.7s ease-out;
+  transition: all 0.3s ease;
   background: linear-gradient(270deg, rgba(93, 106, 219, 0.8), rgba(15, 15, 202, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
   background-position: 1% 50%;
   background-size: 300% 300%;
@@ -61,7 +61,7 @@ body::-webkit-scrollbar {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
-  transition: all 0.7s ease-out;
+  transition: all 0.3s;
 }
 .btn {
   display: inline-block;
@@ -73,7 +73,7 @@ body::-webkit-scrollbar {
   color: rgba(130, 19, 123, 0.7);
   border-radius: 20px;
   padding: 13px 20px;
-  transition: all 0.7s ease-out;
+  transition: all 0.3s;
   background: linear-gradient(270deg, rgba(209, 114, 214, 0.8), rgba(168, 15, 202, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
   background-position: 1% 50%;
   background-size: 300% 300%;
@@ -131,7 +131,7 @@ body::-webkit-scrollbar {
   text-align: center;
   opacity: 0;
   z-index: -5;
-  transition: all 2s ease;
+  transition: all 1s ease;
   cursor: pointer;
 }
 
@@ -165,7 +165,6 @@ body::-webkit-scrollbar {
 
 .projectModal h1 {
   text-align: center;
-  color: rgb(245, 196, 67);
 }
 
 .projectModal ul li:nth-child(4n+1) {
@@ -188,7 +187,7 @@ body::-webkit-scrollbar {
 .projectModal span {
   width: 90%;
   margin: auto;
-  color: rgb(245, 196, 67);
+  
 }
 
 .modal0 {
@@ -197,24 +196,48 @@ body::-webkit-scrollbar {
   color: white;
 }
 
+.modal0 span, .modal0 h1 {
+  color: rgb(245, 196, 67);
+}
+
 .modal1 {
-  background-color: rgba(19, 56, 130, 0.7);
-  border: 2px solid white;
+  background-color: rgba(81, 80, 80, 0.7);
+  border: 2px solid rgb(255, 109, 93);
+  color: white;
+}
+
+.modal1 span, .modal1 h1 {
+  color: rgb(255, 109, 93);
 }
 
 .modal2 {
-  background-color: rgba(19, 56, 130, 0.7);
-  border: 2px solid white;
+  background-color: rgba(69, 69, 69, 0.7);
+  border: 2px solid rgb(238, 36, 245);
+  color: white;
+}
+
+.modal2 span, .modal2 h1 {
+  color: rgb(238, 36, 245);
 }
 
 .modal3 {
-  background-color: rgba(19, 56, 130, 0.7);
-  border: 2px solid white;
+  background-color: rgba(69, 69, 69, 0.7);
+  border: 2px solid black;
+  color: white;
+}
+
+.modal3 span, .modal3 h1 {
+  color: gold;
 }
 
 .modal4 {
-  background-color: rgba(19, 56, 130, 0.7);
-  border: 2px solid white;
+  background-color: rgba(57, 172, 218, 0.7);
+  border: 2px solid rgb(6, 23, 100);
+  color: white;
+}
+
+.modal4 span, .modal4 h1 {
+  color: rgb(6, 23, 100);
 }
 
 .sourceBtn {
@@ -240,30 +263,63 @@ body::-webkit-scrollbar {
   letter-spacing: 0.3em;
   border-radius: 20px;
   padding: 13px 20px;
-  transition: all 0.7s ease;
+  transition: all 0.5s;
   margin: 0.625rem;
 }
 
 .project0 {
   background: transparent;
   background-position: 1% 50%;
-  border: 2px solid rgba(130, 19, 123, 0.7);
-  color: rgba(130, 19, 123, 0.7);
+  border: 2px solid rgb(245, 196, 67);
+  color: rgb(245, 196, 67);
 }
 
 .project0:hover {
-  background: linear-gradient(270deg, rgba(209, 114, 214, 0.8), rgba(168, 15, 202, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background: linear-gradient(270deg, rgba(122, 114, 214, 0.8), rgba(19, 56, 130, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
 }
 
 .project1 {
   background: transparent;
   background-position: 1% 50%;
-  border: 2px solid rgba(54, 19, 130, 0.7);
-  color: rgba(54, 19, 130, 0.7);
+  border: 2px solid rgb(255, 109, 93);
+  color: rgb(255, 109, 93);
 }
 
 .project1:hover {
-  background: linear-gradient(270deg, rgba(119, 114, 214, 0.8), rgba(43, 15, 202, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+  background: linear-gradient(270deg, rgba(158, 158, 158, 0.8), rgba(81, 80, 80, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+}
+
+.project2 {
+  background: transparent;
+  background-position: 1% 50%;
+  border: 2px solid rgb(238, 36, 245);
+  color: rgb(238, 36, 245);
+}
+
+.project2:hover {
+  background: linear-gradient(270deg, rgba(130, 125, 125, 0.8), rgba(69, 69, 69, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+}
+
+.project3 {
+  background: transparent;
+  background-position: 1% 50%;
+  border: 2px solid black;
+  color: black;
+}
+
+.project3:hover {
+  background: linear-gradient(270deg, rgba(158, 158, 158, 0.8), rgba(81, 80, 80, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+}
+
+.project4 {
+  background: transparent;
+  background-position: 1% 50%;
+  border: 2px solid rgb(6, 23, 100);
+  color: rgb(6, 23, 100);
+}
+
+.project4:hover {
+  background: linear-gradient(270deg, rgba(57, 172, 218, 0.8),rgba(57, 172, 218, 0.8), rgba(34,34,34,0), rgba(34,34,34,0));
 }
 
 .projectBtn:hover {

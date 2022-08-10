@@ -175,12 +175,12 @@ const fontJson = require("./models/NanumMyeongjo_Regular.json");
 const font = loader.parse(fontJson);
 
 const textGeometry1 = new TextGeometry(
-	'안녕하세요\n\n프론트엔드 개발자 김준용입니다.\n\n현재 보고계시는 사이트는\n\n포트폴리오 목적으로 제작된 사이트이며\n\n저에 대한 설명과 제가 참여한 프로젝트들을\n\n보여드리기 위하여 제작되었습니다.\n\n위에 보이는 프로젝트 보러가기 버튼을\n\n통해 확인 하실 수 있습니다',
+	'사이트에 방문해주셔서 감사합니다\n\n현재 보고계시는 사이트는\n\n포트폴리오 목적으로 제작된 사이트이며\n\n저에 대한 설명과 제가 참여한 프로젝트들을\n\n보여드리기 위하여 제작되었습니다.\n\n상단에 보이는 프로젝트 보러가기 버튼을\n\n통하여 프로젝트를 확인 하실 수 있으며\n\n하단의 버튼을 통하여\n\n간단한 저의 소개와 보유기술을 확인 하실 수 있습니다.',
 	{
 		font: font,
 		size: 0.1,
 		height: 0,
-		curveSegments: 12,
+		curveSegments: 6,
 		bevelEnabled: true,
 		bevelThickness: 0.002,
 		bevelSize: 0.001,
@@ -197,19 +197,19 @@ const textMaterial1 = new THREE.MeshStandardMaterial({
 	transparent: true,
 });
 const textMesh1 = new THREE.Mesh(textGeometry1, textMaterial1);
-		textMesh1.scale.set(2, 2, 2);
+		textMesh1.scale.set(1.8, 1.8, 1.8);
 		textMesh1.position.set(-3, 2, 10);
 		textMesh1.rotation.y = Math.PI;
 
 scene.add(textMesh1);
 
 const textGeometry2 = new TextGeometry(
-	'hello',
+	'안녕하십니까\n\n저는 성장을 멈추지않는 개발자 김준용입니다.\n\n저는 평소 새로운 기술을 배우는것에 거리낌에 없고\n\n오히려 그 안에서 즐거움을 찾는성향입니다.\n\n또한 다른 사람들과의 관계에서 낯가림이 없어\n\n타인과의 의사소통적인 부분에 대해서도 항상 적극적입니다.\n\n평소 제 개인 시간을 할애하여 공부하는것이 습관화 되어있습니다\n\n국비지원 프론트엔드 양성과정을 진행중\n\n다른 시간을 이용해 온라인강의를 병행할 정도로 진취적인 성향입니다.\n\n현재는 현업에 종사하기위해 필요한 기술과 CS지식의 공부를 병행 하고있습니다.',
 	{
 		font: font,
-		size: 0.2,
+		size: 0.15,
 		height: 0,
-		curveSegments: 12,
+		curveSegments: 6,
 		bevelEnabled: true,
 		bevelThickness: 0.001,
 		bevelSize: 0.001,
@@ -219,16 +219,14 @@ const textGeometry2 = new TextGeometry(
 );
 textGeometry2.center();
 
-const textMaterial2 = new THREE.MeshStandardMaterial({
+const textMaterial2 = new THREE.MeshBasicMaterial({
 	color: "black",
-	roughness: 0.1,
-	metalness: 0.1,
 	transparent: true,
 	opacity: 0,
 });
 const textMesh2 = new THREE.Mesh(textGeometry2, textMaterial2);
-		textMesh2.scale.set(2, 2, 2);
-		textMesh2.position.set(-3, 2, 10);
+		textMesh2.scale.set(1, 1, 1);
+		textMesh2.position.set(-4, 2, 10);
 		textMesh2.rotation.y = Math.PI;
 
 scene.add(textMesh2);
@@ -263,7 +261,6 @@ let newSection;
 
 function setSection(e) {
 	let vh = window.innerHeight;
-	console.log(newSection);
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
 	if (newSection > 4) {
 		newSection = 4;
@@ -377,6 +374,14 @@ Btn2.onclick = () => {
 	for (const project of projects) {
 		project.classList.add('project0');
 	}
+	overlay.style.zIndex = 1;
+	overlay.style.opacity = 1;
+	sourceBtn.style.top = "25px";
+	setTimeout(() => {
+		pageBtn.style.top = "25px";
+	}, 300);
+	document.body.style.overflow = "visible";
+	document.getElementsByClassName('projectModal')[0].style.right = "0%"
 	btnContainer2.style.opacity = 0;
 	btnContainer2.style.zIndex = -1;
 	Btn1.style.opacity = 1;
@@ -387,18 +392,10 @@ Btn2.onclick = () => {
 	camera.rotation.y = 0;
 	// gsap.to(camera.rotation,{duration: 1,y: 0,});
 	gsap.to(camera.position, { duration: 1, x: -2, y: 2, z: 1, });
-	
-	overlay.style.zIndex = 1;
-	setTimeout(() => overlay.style.opacity = 1, 500);
 }
 
 overlay.onclick = () => {
 	overlay.style.display = 'none';
-	sourceBtn.style.top = "25px";
-	pageBtn.style.transitionDelay = "0.2s";
-	pageBtn.style.top = "25px";
-	document.body.style.overflow = "visible";
-	document.getElementsByClassName('projectModal')[0].style.right = "0%"
 }
 
 const stacks = [];
@@ -413,7 +410,7 @@ Btn3.onclick = () => {
 
 Btn4.onclick = () => {
 	textMesh2.position.y = 6;
-	gsap.to(textMesh1.position, { duration: 0.3, y: -2 });
+	gsap.to(textMesh1.position, { duration: 0.3, y: -3 });
 	gsap.to(textMesh2.position,{duration: 0.3,y: 2});
 	gsap.to(textMesh1.material, { duration: 0.3, opacity: 0, });
 	gsap.to(textMesh2.material, { duration: 0.3, opacity: 1, });
