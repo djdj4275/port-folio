@@ -10,6 +10,7 @@ import dat from 'dat.gui';
 import { PreventDragClick } from './PreventDragClick';
 import { Stack } from './Stack';
 import * as CANNON from 'cannon-es';
+import _ from 'lodash';
 
 // Renderer
 const canvas = document.querySelector('#three-canvas');
@@ -261,24 +262,26 @@ const projects = document.querySelectorAll('.projectBtn');
 let newSection;
 
 function setSection(e) {
-	// window.pageYOffset
 	let vh = window.innerHeight;
+	// window.pageYOffset
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
-	console.log(window.scrollY, window.innerHeight);
+	if (newSection > 4) {
+		newSection = 4;
+	}
 
 	if (e.wheelDelta <= 0) { // wheel down
 		for (const project of projects) {
-			if (newSection != 4) {
-				window.scrollY += vh/12;
-			}
+			// if (newSection != 4) {
+			// 	window.scrollY += vh/2;
+			// }
 			project.classList.remove(`project${newSection - 1}`);
 		}
 	}
 	else if (e.wheelDelta >= 0) { // wheel up
 		for (const project of projects) {
-			if (newSection != 0) {
-				window.scrollY -= vh/12;
-			}
+			// if (newSection != 0) {
+			// 	window.scrollY -= vh/2;
+			// }
 			project.classList.remove(`project${newSection + 1}`);
 		}
 	}
@@ -497,7 +500,7 @@ function draw() {
 
 // 이벤트
 window.addEventListener('mousewheel',
-	setSection); 
+	setSection);
 window.addEventListener('resize', setSize);
 window.addEventListener('beforeunload', () => { 
 	window.scrollTo(0,0);
