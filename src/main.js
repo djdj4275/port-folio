@@ -263,7 +263,6 @@ let newSection;
 
 function setSection(e) {
 	let vh = window.innerHeight;
-	// window.pageYOffset
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
 	if (newSection > 4) {
 		newSection = 4;
@@ -499,8 +498,11 @@ function draw() {
 }
 
 // 이벤트
-window.addEventListener('mousewheel',
-	setSection);
+// window.addEventListener('mousewheel',
+// 	setSection);
+window.onwheel = _.debounce((e) => {
+	setSection(e);
+}, 200);
 window.addEventListener('resize', setSize);
 window.addEventListener('beforeunload', () => { 
 	window.scrollTo(0,0);
