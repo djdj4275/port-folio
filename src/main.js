@@ -264,11 +264,12 @@ function setSection(e) {
 	// window.pageYOffset
 	let vh = window.innerHeight;
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
+	console.log(window.scrollY, window.innerHeight);
 
 	if (e.wheelDelta <= 0) { // wheel down
 		for (const project of projects) {
 			if (newSection != 4) {
-				window.scrollY += vh/10;
+				window.scrollY += vh/12;
 			}
 			project.classList.remove(`project${newSection - 1}`);
 		}
@@ -276,7 +277,7 @@ function setSection(e) {
 	else if (e.wheelDelta >= 0) { // wheel up
 		for (const project of projects) {
 			if (newSection != 0) {
-				window.scrollY -= vh/10;
+				window.scrollY -= vh/12;
 			}
 			project.classList.remove(`project${newSection + 1}`);
 		}
