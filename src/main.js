@@ -29,7 +29,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color('white');
 
 //fog
-scene.fog = new THREE.Fog("black", 0.1, 40);
+scene.fog = new THREE.Fog("black", 0.1, 30);
 
 // texture loaders
 const cubeTextureLoader = new THREE.CubeTextureLoader();
@@ -385,6 +385,10 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	for (const video of videos) {
+		video.currentTime = 0;
+		video.play();
+	}
 	for (const project of projects) {
 		project.classList.add('project0');
 	}
