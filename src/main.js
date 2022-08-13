@@ -11,6 +11,7 @@ import { PreventDragClick } from './PreventDragClick';
 import { Stack } from './Stack';
 import * as CANNON from 'cannon-es';
 import _ from 'lodash';
+import data from './models/project.json';
 
 // Renderer
 const canvas = document.querySelector('#three-canvas');
@@ -257,7 +258,7 @@ function checkIntersects() {
 let currentSection = 0;
 const Modals = document.querySelectorAll('.projectModal');
 const projects = document.querySelectorAll('.projectBtn');
-let newSection;
+let newSection = 0;
 
 function setSection(e) {
 	let vh = window.innerHeight;
@@ -312,6 +313,13 @@ function setSize() {
 
 const sourceBtn = document.querySelector('.sourceBtn');
 const pageBtn = document.querySelector('.pageBtn');
+
+sourceBtn.onclick = () => {
+	window.open(data[newSection].sourcecord);
+}
+pageBtn.onclick = () => {
+	window.open(data[newSection].page);
+}
 
 const btnContainer1 = document.createElement('div');
 btnContainer1.classList.add('fixbtnContainer');
