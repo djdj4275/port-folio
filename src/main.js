@@ -99,25 +99,21 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 // scene.add(floorMesh);
 let newSection = 0;
 
-let video = document.getElementById("video");
-video.src = data[newSection].videosrc;
-let videoTexture = new THREE.VideoTexture(video);
-		videoTexture.minFilter = THREE.LinearFilter;
-		videoTexture.maxFilter = THREE.LinearFilter;
+let videos = document.querySelectorAll('#video');
 
 const houses = [];
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5,y: 0, z: -5, index: 1}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 7,y: 0, z: -25, index: 2}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -10,y: 0, z: -45, index: 3}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 10,y: 0, z: -65, index: 4}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5, y: 0, z: -85, index: 5}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5,y: 0, z: -5, index: 0}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 7,y: 0, z: -25, index: 1}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -10,y: 0, z: -45, index: 2}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 10,y: 0, z: -65, index: 3}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5, y: 0, z: -85, index: 4}));
 
 const boards = [];
-boards.push(new Board({ videoTexture, scene, x: -5,y: 0, z: -5, index: 1}));
-boards.push(new Board({ videoTexture, scene, x: 7,y: 0, z: -25, index: 2}));
-boards.push(new Board({ videoTexture, scene, x: -10,y: 0, z: -45, index: 3}));
-boards.push(new Board({ videoTexture, scene, x: 10,y: 0, z: -65, index: 4}));
-boards.push(new Board({ videoTexture, scene, x: -5, y: 0, z: -85, index: 5}));
+boards.push(new Board({ video: videos[0], scene, x: -5,y: 0, z: -5, index: 0}));
+boards.push(new Board({ video: videos[1], scene, x: 7,y: 0, z: -25, index: 1}));
+boards.push(new Board({ video: videos[2], scene, x: -10,y: 0, z: -45, index: 2}));
+boards.push(new Board({ video: videos[3], scene, x: 10,y: 0, z: -65, index: 3}));
+boards.push(new Board({ video: videos[4], scene, x: -5, y: 0, z: -85, index: 4}));
 
 // const cubeMaterial = new THREE.MeshBasicMaterial({
 // 	envMap: cubeTexture,
@@ -267,8 +263,10 @@ const Modals = document.querySelectorAll('.projectModal');
 const projects = document.querySelectorAll('.projectBtn');
 
 function setSection(e) {
-	video.currentTime = 0;
-	video.play();
+	for (const video of videos) {
+		video.currentTime = 0;
+		video.play();
+	}
 	let vh = window.innerHeight;
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
 	if (newSection > 4) {
@@ -387,7 +385,6 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
-	video.currentTime = 0;
 	for (const project of projects) {
 		project.classList.add('project0');
 	}
@@ -494,8 +491,6 @@ const clock = new THREE.Clock();
 
 function draw() {
 	const delta = clock.getDelta();
-
-	videoTexture.needsUpdate = true;
 
 	let cannonStepTime = 1 / 60;
 	if (delta < 0.01) cannonStepTime = 1 / 120;

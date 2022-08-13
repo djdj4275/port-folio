@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import data from './models/project.json';
 
 export class Board {
 	constructor(info) {
@@ -7,11 +8,16 @@ export class Board {
 		this.z = info.z;
 
 		this.index = info.index;
-		this.videoTexture = info.videoTexture;
+		this.video = info.video;
+		this.video.src = data[this.index].videosrc;
+
+		let videoTexture = new THREE.VideoTexture(this.video);
+		videoTexture.minFilter = THREE.LinearFilter;
+		videoTexture.maxFilter = THREE.LinearFilter;
 		
 		this.geometry = new THREE.PlaneGeometry(6, 5);
 		this.material = new THREE.MeshStandardMaterial({
-			map: this.videoTexture,
+			map: videoTexture,
 			side: THREE.DoubleSide,
 			toneMapped: false,
 		})
