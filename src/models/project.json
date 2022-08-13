@@ -3,30 +3,35 @@
       "id" : 0,
       "name" : "Feelm",
       "sourcecord" : "https://github.com/djdj4275/TeamProject-Feelm",
-      "page" : "https://feelm-9bc54.web.app/"
+      "page" : "https://feelm-9bc54.web.app/",
+      "videosrc" : "https://my-proxy-sev.herokuapp.com/https://user-images.githubusercontent.com/99634816/184473524-bddb7469-c400-48e4-8668-fa7fd6e6114e.mp4"
   },
   {
       "id" : 1,
       "name" : "Mat.Zip",
       "sourcecord" : "https://github.com/djdj4275/Mat.Zip",
-      "page" : "https://mat-zip-a7f69.web.app/"
+      "page" : "https://mat-zip-a7f69.web.app/",
+      "videosrc" : "https://my-proxy-sev.herokuapp.com/https://user-images.githubusercontent.com/99634816/184473524-bddb7469-c400-48e4-8668-fa7fd6e6114e.mp4"
   },
   {
       "id" : 2,
       "name" : "JD",
       "sourcecord" : "https://github.com/djdj4275/personal-portfolio2",
-      "page" : "https://personal-portfolio2.firebaseapp.com/"
+      "page" : "https://personal-portfolio2.firebaseapp.com/",
+      "videosrc" : "https://my-proxy-sev.herokuapp.com/https://user-images.githubusercontent.com/99634816/184473524-bddb7469-c400-48e4-8668-fa7fd6e6114e.mp4"
   },
   {
       "id" : 3,
       "name" : "Arti:cal",
       "sourcecord" : "https://github.com/djdj4275/personal-portfolio1",
-      "page" : "https://personal-portfolio1-73788.firebaseapp.com/"
+      "page" : "https://personal-portfolio1-73788.firebaseapp.com/",
+      "videosrc" : "https://my-proxy-sev.herokuapp.com/https://user-images.githubusercontent.com/99634816/184473524-bddb7469-c400-48e4-8668-fa7fd6e6114e.mp4"
   },
   {
       "id" : 4,
       "name" : "portfolio",
       "sourcecord" : "https://www.facebook.com/%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C%EC%8B%9C%EC%86%8C-%EC%84%9C%EC%B4%8C-106268298240985/?ref=py_c",
-      "page" : "https://www.instagram.com/groundseesaw/"
+      "page" : "https://www.instagram.com/groundseesaw/",
+      "videosrc" : "https://my-proxy-sev.herokuapp.com/https://user-images.githubusercontent.com/99634816/184473524-bddb7469-c400-48e4-8668-fa7fd6e6114e.mp4"
   }
 ]

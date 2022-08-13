@@ -97,8 +97,10 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 // floorMesh.receiveShadow = true;
 // floorMesh.position.set(0, -10, 0);
 // scene.add(floorMesh);
+let newSection = 0;
 
 let video = document.getElementById("video");
+video.src = data[newSection].videosrc;
 let videoTexture = new THREE.VideoTexture(video);
 		videoTexture.minFilter = THREE.LinearFilter;
 		videoTexture.maxFilter = THREE.LinearFilter;
@@ -263,9 +265,10 @@ function checkIntersects() {
 let currentSection = 0;
 const Modals = document.querySelectorAll('.projectModal');
 const projects = document.querySelectorAll('.projectBtn');
-let newSection = 0;
 
 function setSection(e) {
+	video.currentTime = 0;
+	video.play();
 	let vh = window.innerHeight;
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
 	if (newSection > 4) {
@@ -384,6 +387,7 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	video.currentTime = 0;
 	for (const project of projects) {
 		project.classList.add('project0');
 	}
