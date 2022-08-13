@@ -7,11 +7,14 @@ export class Board {
 		this.z = info.z;
 
 		this.index = info.index;
-
-		this.boardTexture = info.textureLoader.load(info.modelSrc);
+		this.videoTexture = info.videoTexture;
 		
 		this.geometry = new THREE.PlaneGeometry(6, 5);
-		this.material = new THREE.MeshStandardMaterial({map: this.boardTexture})
+		this.material = new THREE.MeshStandardMaterial({
+			map: this.videoTexture,
+			side: THREE.DoubleSide,
+			toneMapped: false,
+		})
 
 		this.mesh = new THREE.Mesh(this.geometry, this.material);
 		this.mesh.castShadow = true;
