@@ -4,6 +4,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { House } from './House';
 import { Board } from './Board';
+import { Buttons } from './Buttons';
 import gsap from 'gsap';
 import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
 import dat from 'dat.gui';
@@ -113,7 +114,18 @@ boards.push(new Board({ video: videos[0], scene, x: -5,y: 0, z: -5, index: 0}));
 boards.push(new Board({ video: videos[1], scene, x: 7,y: 0, z: -25, index: 1}));
 boards.push(new Board({ video: videos[2], scene, x: -10,y: 0, z: -45, index: 2}));
 boards.push(new Board({ video: videos[3], scene, x: 10,y: 0, z: -65, index: 3}));
-boards.push(new Board({ video: videos[4], scene, x: -5, y: 0, z: -85, index: 4}));
+boards.push(new Board({ video: videos[4], scene, x: -5, y: 0, z: -85, index: 4 }));
+
+const playBtnTex = textureLoader.load("./models/play.png");
+const pauseBtnTex = textureLoader.load("./models/pause.png");
+const stopBtnTex = textureLoader.load("./models/stop.png");
+
+const buttons = [];
+buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -5,y: 0, z: -5, index: 0}));
+buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: 7,y: 0, z: -25, index: 1}));
+buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -10,y: 0, z: -45, index: 2}));
+buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: 10,y: 0, z: -65, index: 3}));
+buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -5, y: 0, z: -85, index: 4}));
 
 // const cubeMaterial = new THREE.MeshBasicMaterial({
 // 	envMap: cubeTexture,
@@ -255,7 +267,19 @@ function checkIntersects() {
 	raycaster.setFromCamera(mouse, camera);
 
 	const intersects = raycaster.intersectObjects(scene.children);
-	// console.log(intersects[0].object);
+	let btnIndex = Number(intersects[0].object.name.substring(0, 1));
+	let btnType = intersects[0].object.name.substring(4);
+	console.log(btnIndex, btnType);
+	if (btnType === "play버튼") {
+		videos[btnIndex].play();
+	}
+	if (btnType === "pause버튼") {
+		videos[btnIndex].pause();
+	}
+	if (btnType === "stop버튼") {
+		videos[btnIndex].pause();
+		videos[btnIndex].currentTime = 0;
+	}
 }
 
 let currentSection = 0;
