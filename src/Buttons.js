@@ -11,11 +11,27 @@ export class Buttons {
     this.playBtnTex = info.playBtnTex;
     this.pauseBtnTex = info.pauseBtnTex;
     this.stopBtnTex = info.stopBtnTex;
+
+    if (this.index == 0) {this.color = "yellow"}
+    else if (this.index == 1) { this.color = "salmon" }
+    else if (this.index == 2) { this.color = "purple" }
+    else if (this.index == 3) { this.color = "gray" }
+    else if (this.index == 4) {this.color = "skyblue"}
+
 		
 		this.geometry = new THREE.CircleGeometry(0.3, 32);
-    this.playMaterial = new THREE.MeshStandardMaterial({ map: this.playBtnTex });
-    this.pauseMaterial = new THREE.MeshStandardMaterial({ map: this.pauseBtnTex });
-    this.stopMaterial = new THREE.MeshStandardMaterial({ map: this.stopBtnTex });
+    this.playMaterial = new THREE.MeshStandardMaterial({
+      map: this.playBtnTex,
+      color: this.color
+    });
+    this.pauseMaterial = new THREE.MeshStandardMaterial({
+      map: this.pauseBtnTex,
+      color: this.color
+    });
+    this.stopMaterial = new THREE.MeshStandardMaterial({
+      map: this.stopBtnTex,
+      color: this.color
+    });
 
     this.playMesh = new THREE.Mesh(this.geometry, this.playMaterial);
     this.pauseMesh = new THREE.Mesh(this.geometry, this.pauseMaterial);
