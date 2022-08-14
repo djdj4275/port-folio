@@ -263,13 +263,29 @@ canvas.addEventListener('click', (e) => {
 	checkIntersects();
 });
 
+canvas.addEventListener('mousemove', (e) => {
+	mouse.x = e.clientX / canvas.clientWidth * 2 - 1;
+	mouse.y = -(e.clientY / canvas.clientHeight * 2 - 1);
+
+	let raycaster2 = new THREE.Raycaster();
+	raycaster2.setFromCamera(mouse, camera);
+	let intersects = raycaster2.intersectObjects(scene.children);
+	if (intersects.length > 0) {
+		if (intersects[0].object.name.slice(-2) == "버튼") {
+			document.body.style.cursor = "pointer";
+		}
+		else {
+			document.body.style.cursor = "default";
+		}
+	}
+});
+
 function checkIntersects() {
 	raycaster.setFromCamera(mouse, camera);
 
 	const intersects = raycaster.intersectObjects(scene.children);
 	let btnIndex = Number(intersects[0].object.name.substring(0, 1));
 	let btnType = intersects[0].object.name.substring(4);
-	console.log(btnIndex, btnType);
 	if (btnType === "play버튼") {
 		videos[btnIndex].play();
 	}
