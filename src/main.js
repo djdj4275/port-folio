@@ -321,6 +321,7 @@ function checkIntersects() {
 }
 
 let currentSection = 0;
+let activeProjectBtn = "project0";
 const Modals = document.querySelectorAll('.projectModal');
 const projects = document.querySelectorAll('.projectBtn');
 let vh = window.innerHeight;
@@ -349,15 +350,16 @@ function setSection(e) {
 			}
 			window.scrollTo(0, vh * newSection);
 		}
+		for (const project of projects) {
+			project.classList.add(`project${newSection}`);
+		}
+		activeProjectBtn = `project${newSection}`;
 	}
 	
 
 	if (wheelController && currentSection !== newSection) {
 		for (const Modal of Modals) {
 			Modal.style.right = "-100%";
-		}
-		for (const project of projects) {
-			project.classList.add(`project${newSection}`);
 		}
 		document.querySelector(`.modal${newSection}`).style.right = "0%";
 		gsap.to(camera.position,
@@ -374,6 +376,61 @@ function setSection(e) {
 		Btn.classList.remove(`active`);
 	}
 	radioBtn[newSection].classList.add(`active`);
+}
+
+radioBtns.onclick = (e) => { 
+	for (const Btn of radioBtn) {
+		Btn.classList.remove(`active`);
+	}
+	for (const project of projects) {
+		project.classList.remove(`${activeProjectBtn}`);
+	}
+	if (e.target.classList.contains('radio0')) {
+		window.scrollTo(0, 0);
+		newSection = 0;
+		radioBtn[0].classList.add(`active`);
+		activeProjectBtn = "project0"
+	}
+	else if (e.target.classList.contains('radio1')) { 
+		window.scrollTo(0, vh);
+		newSection = 1;
+		radioBtn[1].classList.add(`active`);
+		activeProjectBtn = "project1"
+	}
+	else if (e.target.classList.contains('radio2')) { 
+		window.scrollTo(0, vh*2);
+		newSection = 2;
+		radioBtn[2].classList.add(`active`);
+		activeProjectBtn = "project2"
+	}
+	else if (e.target.classList.contains('radio3')) { 
+		window.scrollTo(0, vh*3);
+		newSection = 3;
+		radioBtn[3].classList.add(`active`);
+		activeProjectBtn = "project3"
+	}
+	else if (e.target.classList.contains('radio4')) { 
+		window.scrollTo(0, vh*4);
+		newSection = 4;
+		radioBtn[4].classList.add(`active`);
+		activeProjectBtn = "project4"
+	}
+	for (const Modal of Modals) {
+		Modal.style.right = "-100%";
+	}
+	for (const project of projects) {
+		project.classList.add(`project${newSection}`);
+	}
+	document.querySelector(`.modal${newSection}`).style.right = "0%";
+	gsap.to(camera.position,
+		{
+			duration: 1,
+			x: houses[newSection].x + 3,
+			y: houses[newSection].y+2,
+			z: houses[newSection].z+6,
+		}
+	);
+	currentSection = newSection;
 }
 
 function setSize() {
@@ -437,7 +494,7 @@ Btn1.onclick = () => {
 	Btn2.style.zIndex = 1;
 	// gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
 	camera.rotation.y = Math.PI;
-	gsap.to(camera.position, { duration: 0.5, x: -0.5, y: 2, z: 5, });
+	gsap.to(camera.position, { duration: 1, x: -0.5, y: 2, z: 5, });
 	textMesh1.position.y = 6;
 	gsap.to(textMesh1.position, { duration: 0.3, y: 2 });
 	gsap.to(textMesh2.position, { duration: 0.3, y: -2 });

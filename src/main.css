@@ -404,22 +404,27 @@ body::-webkit-scrollbar {
 
 .radio0 {
   background-color: yellow;
+  cursor: pointer;
 }
 
 .radio1 {
   background-color: salmon;
+  cursor: pointer;
 }
 
 .radio2 {
   background-color: purple;
+  cursor: pointer;
 }
 
 .radio3 {
   background-color: black;
+  cursor: pointer;
 }
 
 .radio4 {
   background-color: skyblue;
+  cursor: pointer;
 }
 
 .active {
