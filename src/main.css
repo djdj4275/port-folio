@@ -382,3 +382,50 @@ body::-webkit-scrollbar {
 .pageBtn:hover div {
   opacity: 1;
 }
+
+.radioBtns {
+  position: fixed;
+  width: 280px;
+  height: 50px;
+  left: 500px;
+  top: -100%;
+  transition: all 0.3s;
+}
+
+.radioBtn {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 10px;
+  opacity: 0.3;
+}
+
+.radio0 {
+  background-color: yellow;
+  cursor: pointer;
+}
+
+.radio1 {
+  background-color: salmon;
+  cursor: pointer;
+}
+
+.radio2 {
+  background-color: purple;
+  cursor: pointer;
+}
+
+.radio3 {
+  background-color: black;
+  cursor: pointer;
+}
+
+.radio4 {
+  background-color: blue;
+  cursor: pointer;
+}
+
+.active {
+  opacity: 1;
+}

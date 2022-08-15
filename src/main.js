@@ -112,6 +112,8 @@ scene.add(LogoMesh);
 // floorMesh.position.set(0, -10, 0);
 // scene.add(floorMesh);
 let newSection = 0;
+const radioBtns = document.querySelector('.radioBtns');
+const radioBtn = document.querySelectorAll('.radioBtn');
 
 let videos = document.querySelectorAll('#video');
 
@@ -282,9 +284,9 @@ canvas.addEventListener('mousemove', (e) => {
 
 	let raycaster2 = new THREE.Raycaster();
 	raycaster2.setFromCamera(mouse, camera);
-	let intersects = raycaster2.intersectObjects(scene.children);
-	if (intersects.length > 0) {
-		if (intersects[0].object.name.slice(-2) == "버튼") {
+	let moveintersects = raycaster2.intersectObjects(scene.children);
+	if (moveintersects.length > 0) {
+		if (moveintersects[0].object.name.slice(-2) == "버튼") {
 			document.body.style.cursor = "pointer";
 		}
 		else {
@@ -296,31 +298,33 @@ canvas.addEventListener('mousemove', (e) => {
 function checkIntersects() {
 	raycaster.setFromCamera(mouse, camera);
 
-	const intersects = raycaster.intersectObjects(scene.children);
-	let btnIndex = Number(intersects[0].object.name.substring(0, 1));
-	let btnType = intersects[0].object.name.substring(4);
-	if (btnType === "play버튼") {
-		videos[btnIndex].play();
-	}
-	if (btnType === "pause버튼") {
-		videos[btnIndex].pause();
-	}
-	if (btnType === "stop버튼") {
-		videos[btnIndex].pause();
-		videos[btnIndex].currentTime = 0;
+	const clickintersects = raycaster.intersectObjects(scene.children);
+	if (clickintersects.length > 0) {
+		let btnIndex = Number(clickintersects[0].object.name.substring(0, 1));
+		let btnType = clickintersects[0].object.name.substring(4);
+		if (btnType === "play버튼") {
+			videos[btnIndex].play();
+		}
+		if (btnType === "pause버튼") {
+			videos[btnIndex].pause();
+		}
+		if (btnType === "stop버튼") {
+			videos[btnIndex].pause();
+			videos[btnIndex].currentTime = 0;
+		}
 	}
 }
 
 let currentSection = 0;
 const Modals = document.querySelectorAll('.projectModal');
 const projects = document.querySelectorAll('.projectBtn');
+let vh = window.innerHeight;
 
 function setSection(e) {
 	for (const video of videos) {
 		video.currentTime = 0;
 		video.play();
 	}
-	let vh = window.innerHeight;
 	newSection = Math.ceil(window.scrollY / window.innerHeight);
 	if (newSection > 4) {
 		newSection = 4;
@@ -361,6 +365,10 @@ function setSection(e) {
 		);
 		currentSection = newSection;
 	}
+	for (const Btn of radioBtn) {
+		Btn.classList.remove(`active`);
+	}
+	radioBtn[newSection].classList.add(`active`);
 }
 
 function setSize() {
@@ -403,6 +411,7 @@ Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	radioBtns.style.top = "-100%";
 	LogoMesh.position.set(10,8,10);
 	gsap.to(LogoMesh.position, { duration: 1, x: 6.2, y: 4.7, z: 10 });
 	sourceBtn.style.top = "-100%";
@@ -440,6 +449,8 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	radioBtn[0].classList.add(`active`);
+	radioBtns.style.top = "5%";
 	for (const video of videos) {
 		video.currentTime = 0;
 		video.play();
