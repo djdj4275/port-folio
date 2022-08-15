@@ -88,6 +88,23 @@ const gltfLoader = new GLTFLoader();
 const loadingManager = new THREE.LoadingManager();
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
+const LogoGeometry = new THREE.CircleGeometry(1, 32);
+const LogoTexture = textureLoader.load('./models/logo.jpg');
+let rgb1 = 0;
+let rgb2 = 255;
+let rgb3 = 255;
+let LogoRandomColor = new THREE.Color(`rgb(${rgb1},${rgb2},${rgb3})`);
+const LogoMaterial = new THREE.MeshStandardMaterial({
+	map: LogoTexture,
+	side: THREE.DoubleSide,
+	color: LogoRandomColor
+})
+const LogoMesh = new THREE.Mesh(LogoGeometry, LogoMaterial);
+LogoMesh.position.set(5.2, 4.2, 10);
+LogoMesh.rotation.y = Math.PI;
+LogoMesh.material.color.needsUpdate = true;
+scene.add(LogoMesh);
+
 // const floorMesh = new THREE.Mesh(
 // 	new THREE.PlaneGeometry(1000, 1000),
 // 	new THREE.MeshStandardMaterial({
@@ -220,7 +237,7 @@ const textMesh1 = new THREE.Mesh(textGeometry1, textMaterial1);
 scene.add(textMesh1);
 
 const textGeometry2 = new TextGeometry(
-	'안녕하십니까\n\n저는 성장을 멈추지않는 개발자 김준용입니다.\n\n저는 평소 새로운 기술을 배우는것에 거리낌에 없고\n\n오히려 그 안에서 즐거움을 찾는 성향입니다.\n\n또한 다른 사람들과의 관계에서 낯가림이 없어\n\n타인과의 의사소통적인 부분에 대해서도 항상 적극적입니다.\n\n평소 제 개인 시간을 할애하여 공부하는것이 습관화 되어있습니다\n\n국비지원 프론트엔드 양성과정을 진행중\n\n다른 시간을 이용해 온라인강의를 병행할 정도로 진취적인 성향입니다.\n\n현재는 현업에 종사하기위해 필요한 기술과 CS지식의 공부를 병행 하고있습니다.',
+	'안녕하십니까\n\n성장을 멈추지않는 개발자 김준용입니다.\n\n저는 평소 새로운 기술을 배우는것에 거리낌에 없고\n\n다른 사람들과의 관계에서 낯가림이 없어\n\n타인과의 의사소통적인 부분에 대해서도 항상 적극적입니다.\n\n또한 국비지원 프론트엔드 양성과정을 진행중에도\n\n개인 시간을 할애하여 공부할 정도로 진취적이며\n\n배움이 습관화 되어있습니다\n\n현재로서는 개발자로서 갖춰야할 기술과 CS지식의 공부를 병행하며\n\n현업에 종사하기 위해 노력하고 있습니다.',
 	{
 		font: font,
 		size: 0.15,
@@ -537,6 +554,7 @@ function draw() {
 	const delta = clock.getDelta();
 
 	let cannonStepTime = 1 / 60;
+
 	if (delta < 0.01) cannonStepTime = 1 / 120;
 
 	cannonWorld.step(cannonStepTime, delta, 3);
