@@ -89,20 +89,16 @@ const loadingManager = new THREE.LoadingManager();
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
 const LogoGeometry = new THREE.CircleGeometry(1, 32);
-const LogoTexture = textureLoader.load('./models/logo.jpg');
-let rgb1 = 0;
-let rgb2 = 255;
-let rgb3 = 255;
-let LogoRandomColor = new THREE.Color(`rgb(${rgb1},${rgb2},${rgb3})`);
-const LogoMaterial = new THREE.MeshStandardMaterial({
+const LogoTexture = textureLoader.load('./models/logo.png');
+const LogoMaterial = new THREE.MeshBasicMaterial({
 	map: LogoTexture,
 	side: THREE.DoubleSide,
-	color: LogoRandomColor
+	transparent: true,
+	color: "darkblue"
 })
 const LogoMesh = new THREE.Mesh(LogoGeometry, LogoMaterial);
-LogoMesh.position.set(5.2, 4.2, 10);
+LogoMesh.position.set(6.2, 4.7, 10);
 LogoMesh.rotation.y = Math.PI;
-LogoMesh.material.color.needsUpdate = true;
 scene.add(LogoMesh);
 
 // const floorMesh = new THREE.Mesh(
@@ -259,7 +255,7 @@ const textMaterial2 = new THREE.MeshBasicMaterial({
 });
 const textMesh2 = new THREE.Mesh(textGeometry2, textMaterial2);
 		textMesh2.scale.set(1, 1, 1);
-		textMesh2.position.set(-4, 2, 10);
+		textMesh2.position.set(-3, 2, 10);
 		textMesh2.rotation.y = Math.PI;
 
 scene.add(textMesh2);
@@ -407,6 +403,8 @@ Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	LogoMesh.position.set(10,8,10);
+	gsap.to(LogoMesh.position, { duration: 1, x: 6.2, y: 4.7, z: 10 });
 	sourceBtn.style.top = "-100%";
 	pageBtn.style.top = "-100%";
 	for (const project of projects) { 
