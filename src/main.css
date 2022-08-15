@@ -27,7 +27,7 @@ body::-webkit-scrollbar {
   width: 250px;
   height: 100px;
 	top: 5%;
-	right: 5%;
+	right: 50px;
 }
 .fixbtn {
   position: absolute;
