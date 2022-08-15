@@ -112,6 +112,7 @@ scene.add(LogoMesh);
 // floorMesh.position.set(0, -10, 0);
 // scene.add(floorMesh);
 let newSection = 0;
+let wheelController = false;
 const radioBtns = document.querySelector('.radioBtns');
 const radioBtn = document.querySelectorAll('.radioBtn');
 
@@ -160,6 +161,7 @@ let mixer;
 		practiceMesh.position.set(3, 1, 10);
 		practiceMesh.rotation.y = Math.PI*0.2;
 		practiceMesh.scale.set(4, 4, 4);
+		practiceMesh.name = "메인캐릭터";
 		practiceMesh.traverse(function (child) {
 			if (child.isMesh) {
 				child.material.shading = THREE.SmoothShading;
@@ -167,7 +169,7 @@ let mixer;
 				child.receiveShadow = true;
 			}
 		})
-    scene.add(practiceMesh);
+		scene.add(practiceMesh);
 
     mixer = new THREE.AnimationMixer(practiceMesh);
     const actions = [];
@@ -289,6 +291,9 @@ canvas.addEventListener('mousemove', (e) => {
 		if (moveintersects[0].object.name.slice(-2) == "버튼") {
 			document.body.style.cursor = "pointer";
 		}
+		else if (moveintersects[0].object.name == "Cube") {
+			document.body.style.cursor = "pointer";
+		}
 		else {
 			document.body.style.cursor = "default";
 		}
@@ -347,7 +352,7 @@ function setSection(e) {
 	}
 	
 
-	if (currentSection !== newSection) {
+	if (wheelController && currentSection !== newSection) {
 		for (const Modal of Modals) {
 			Modal.style.right = "-100%";
 		}
@@ -411,9 +416,11 @@ Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	wheelController = false;
+	document.body.style.overflow = "hidden";
 	radioBtns.style.top = "-100%";
 	LogoMesh.position.set(10,8,10);
-	gsap.to(LogoMesh.position, { duration: 1, x: 6.2, y: 4.7, z: 10 });
+	gsap.to(LogoMesh.position, { duration: 0.5, x: 6.2, y: 4.7, z: 10 });
 	sourceBtn.style.top = "-100%";
 	pageBtn.style.top = "-100%";
 	for (const project of projects) { 
@@ -428,15 +435,14 @@ Btn1.onclick = () => {
 	Btn2.style.opacity = 1;
 	Btn1.style.zIndex = -1;
 	Btn2.style.zIndex = 1;
-	document.body.style.overflow = "hidden";
 	// gsap.to(camera.rotation,{duration: 1,y: Math.PI,});
 	camera.rotation.y = Math.PI;
-	gsap.to(camera.position, { duration: 1, x: -0.5, y: 2, z: 5, });
+	gsap.to(camera.position, { duration: 0.5, x: -0.5, y: 2, z: 5, });
 	textMesh1.position.y = 6;
 	gsap.to(textMesh1.position, { duration: 0.3, y: 2 });
 	gsap.to(textMesh2.position, { duration: 0.3, y: -2 });
 	gsap.to(textMesh1.material, { duration: 0.3, opacity: 1, });
-	gsap.to(textMesh2.material,{duration: 0.3,opacity: 0,});
+	gsap.to(textMesh2.material, { duration: 0.3, opacity: 0, });
 }
 	
 btnContainer1.append(Btn1);
@@ -449,6 +455,7 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	wheelController = true;
 	radioBtn[0].classList.add(`active`);
 	radioBtns.style.top = "5%";
 	for (const video of videos) {
