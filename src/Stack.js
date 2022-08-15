@@ -11,12 +11,12 @@ export class Stack {
     this.loader = new THREE.TextureLoader();
 
     this.materialArray = [
-      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/로고사진/${this.index}.jpg`) }),
-      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/로고사진/${this.index}.jpg`) }),
-      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/로고사진/${this.index}.jpg`) }),
-      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/로고사진/${this.index}.jpg`) }),
-      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/로고사진/${this.index}.jpg`) }),
-      new THREE.MeshBasicMaterial( {map: this.loader.load(`./models/로고사진/${this.index}.jpg`)})
+      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/기술스택/${this.index}.jpg`) }),
+      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/기술스택/${this.index}.jpg`) }),
+      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/기술스택/${this.index}.jpg`) }),
+      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/기술스택/${this.index}.jpg`) }),
+      new THREE.MeshBasicMaterial({ map: this.loader.load(`./models/기술스택/${this.index}.jpg`) }),
+      new THREE.MeshBasicMaterial( {map: this.loader.load(`./models/기술스택/${this.index}.jpg`)})
     ]
 
     this.scene = info.scene;

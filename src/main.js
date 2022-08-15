@@ -35,7 +35,7 @@ scene.fog = new THREE.Fog("black", 0.1, 30);
 // texture loaders
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 	const cubeTexture = cubeTextureLoader
-		.setPath("./models/")
+		.setPath("./models/skymap/")
 		.load([
    		"px.png",
     	"nx.png",
@@ -89,7 +89,7 @@ const loadingManager = new THREE.LoadingManager();
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
 const LogoGeometry = new THREE.CircleGeometry(1, 32);
-const LogoTexture = textureLoader.load('./models/logo.png');
+const LogoTexture = textureLoader.load('./models/로고사진/logo.png');
 const LogoMaterial = new THREE.MeshBasicMaterial({
 	map: LogoTexture,
 	side: THREE.DoubleSide,
@@ -118,11 +118,11 @@ const radioBtn = document.querySelectorAll('.radioBtn');
 let videos = document.querySelectorAll('#video');
 
 const houses = [];
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5,y: 0, z: -5, index: 0}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 7,y: 0, z: -25, index: 1}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -10,y: 0, z: -45, index: 2}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: 10,y: 0, z: -65, index: 3}));
-houses.push(new House({ gltfLoader, scene, modelSrc: '/models/tv.glb', x: -5, y: 0, z: -85, index: 4}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/glb모음/tv.glb', x: -5,y: 0, z: -5, index: 0}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/glb모음/tv.glb', x: 7,y: 0, z: -25, index: 1}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/glb모음/tv.glb', x: -10,y: 0, z: -45, index: 2}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/glb모음/tv.glb', x: 10,y: 0, z: -65, index: 3}));
+houses.push(new House({ gltfLoader, scene, modelSrc: '/models/glb모음/tv.glb', x: -5, y: 0, z: -85, index: 4}));
 
 const boards = [];
 boards.push(new Board({ video: videos[0], scene, x: -5,y: 0, z: -5, index: 0}));
@@ -131,9 +131,9 @@ boards.push(new Board({ video: videos[2], scene, x: -10,y: 0, z: -45, index: 2})
 boards.push(new Board({ video: videos[3], scene, x: 10,y: 0, z: -65, index: 3}));
 boards.push(new Board({ video: videos[4], scene, x: -5, y: 0, z: -85, index: 4 }));
 
-const playBtnTex = textureLoader.load("./models/play.png");
-const pauseBtnTex = textureLoader.load("./models/pause.png");
-const stopBtnTex = textureLoader.load("./models/stop.png");
+const playBtnTex = textureLoader.load("./models/플레이어버튼/play.png");
+const pauseBtnTex = textureLoader.load("./models/플레이어버튼/pause.png");
+const stopBtnTex = textureLoader.load("./models/플레이어버튼/stop.png");
 
 const buttons = [];
 buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -5,y: 0, z: -5, index: 0}));
@@ -155,7 +155,7 @@ buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -5, y: 0
 
 let mixer;
 
-	gltfLoader.load("/models/practiceblended.glb", (gltf) => {
+	gltfLoader.load("/models/glb모음/메인캐릭터.glb", (gltf) => {
 		const practiceMesh = gltf.scene;
 		practiceMesh.position.set(3, 1, 10);
 		practiceMesh.rotation.y = Math.PI*0.2;
@@ -202,7 +202,7 @@ plane1.receiveShadow = true;
 scene.add(plane1, plane2);
 
 const loader = new FontLoader();
-const fontJson = require("./models/NanumMyeongjo_Regular.json");
+const fontJson = require("./models/폰트체/NanumMyeongjo_Regular.json");
 const font = loader.parse(fontJson);
 
 const textGeometry1 = new TextGeometry(
