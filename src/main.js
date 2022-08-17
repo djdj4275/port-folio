@@ -524,9 +524,9 @@ Btn2.onclick = () => {
 	}
 	overlay.style.zIndex = 1;
 	overlay.style.opacity = 1;
-	sourceBtn.style.top = "5%";
+	sourceBtn.style.top = "3%";
 	setTimeout(() => {
-		pageBtn.style.top = "5%";
+		pageBtn.style.top = "3%";
 	}, 300);
 	document.body.style.overflow = "visible";
 	document.getElementsByClassName('projectModal')[0].style.right = "0%"
@@ -600,7 +600,7 @@ for (const stackDelete of stackDeletes) {
 }
 
 Btn5.onclick = () => {
-	document.getElementsByClassName('stackInformation')[0].style.left = "60%"
+	document.getElementsByClassName('stackInformation')[0].style.left = "50%"
 	gsap.to(textMesh1.position, { duration: 0.5, y: -2 });
 	gsap.to(textMesh2.position, { duration: 0.5, y: -2 });
 	gsap.to(textMesh1.material, { duration: 0.3, opacity: 0, });

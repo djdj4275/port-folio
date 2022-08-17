@@ -26,8 +26,8 @@ body::-webkit-scrollbar {
 	position: fixed;
   width: 250px;
   height: 100px;
-	top: 5%;
-	right: 50px;
+	top: 3%;
+	right: 30px;
 }
 .fixbtn {
   position: absolute;
@@ -59,8 +59,8 @@ body::-webkit-scrollbar {
 
 .btnContainer {
 	position: fixed;
-	bottom: 5%;
-	right: 5%;
+	bottom: 3%;
+	right: 3%;
   transition: all 0.3s;
 }
 .btn {
@@ -94,8 +94,10 @@ body::-webkit-scrollbar {
 	position: fixed;
 	left: 100%;
 	top: 12%;
-	width: 600px;
-	height: 550px;
+	width: 50vw;
+	height: 65vh;
+  min-width: 600px;
+  min-height: 550px;
   border-radius: 20px;
   border: 1px solid white;
 	color: white;
@@ -429,4 +431,57 @@ body::-webkit-scrollbar {
 
 .active {
   opacity: 1;
+}
+
+@media screen and (max-width: 1200px), (max-height: 768px) {
+  .fixbtn {
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    padding: 10px 15px;
+  }
+  .btn {
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    padding: 10px 15px;
+    margin: 0.625rem;
+  }
+  .projectBtn {
+    height: 40px;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    padding: 10px 12px;
+    margin: 0.625rem;
+  }
+  .radioBtns {
+    left: 400px;
+  }
+  .radioBtn {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+  }
+  .sourceBtn div {
+    font-size: 10px;
+  }
+  .sourceBtn .fa-code {
+    font-size: 15px;
+  }
+  .pageBtn div {
+    font-size: 10px;
+  }
+  .pageBtn .fa-file {
+    font-size: 15px;
+  }
+  .stackInformation {
+    width: 48vw;
+    height: 60vh;
+    min-width: 550px;
+    min-height: 500px;
+  }
+  .stackInformation h1 {
+    font-size: 20px;
+  }
+  .stackInformation ul {
+    font-size: 13px;
+  }
 }
