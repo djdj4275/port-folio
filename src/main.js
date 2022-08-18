@@ -155,10 +155,11 @@ buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -5, y: 0
 // scene.add(boxMesh);
 
 let mixer;
+const actions = [];
 
 	gltfLoader.load("/models/glb모음/메인캐릭터.glb", (gltf) => {
 		const practiceMesh = gltf.scene;
-		practiceMesh.position.set(3, 1, 10);
+		practiceMesh.position.set(2, 1, 10);
 		practiceMesh.rotation.y = Math.PI*0.2;
 		practiceMesh.scale.set(4, 4, 4);
 		practiceMesh.name = "메인캐릭터";
@@ -172,7 +173,6 @@ let mixer;
 		scene.add(practiceMesh);
 
     mixer = new THREE.AnimationMixer(practiceMesh);
-    const actions = [];
     actions[0] = mixer.clipAction(gltf.animations[0]);
     actions[1] = mixer.clipAction(gltf.animations[1]);
     actions[2] = mixer.clipAction(gltf.animations[2]);
@@ -183,6 +183,69 @@ let mixer;
 			reallight2.target = plane1;
 		}, 1000);
 	});
+
+	gltfLoader.load("/models/glb모음/sign.glb", (gltf) => {
+		const signMesh = gltf.scene;
+		signMesh.position.set(4, -0.8, 9.8);
+		signMesh.rotation.y = Math.PI*0.03;
+		signMesh.scale.set(0.7, 0.7, 0.2);
+		signMesh.name = "표지판";
+		signMesh.traverse(function (child) {
+			if (child.isMesh) {
+				child.material.shading = THREE.SmoothShading;
+				child.castShadow = true;
+				child.receiveShadow = true;
+			}
+		})
+		scene.add(signMesh);
+	}); 
+
+	const loader = new FontLoader();
+	const fontJson = require("./models/폰트체/NanumMyeongjo_Regular.json");
+	const font = loader.parse(fontJson);
+
+	const signTextGeometry1 = new TextGeometry(
+		"마스코트 파랭이",
+		{
+			font: font,
+			size: 0.1,
+			height: 0,
+			curveSegments: 6,
+			bevelEnabled: true,
+			bevelThickness: 0.002,
+			bevelSize: 0.005,
+			bevelOffset: 0.001,
+			bevelSegments: 12
+		}
+	);
+	signTextGeometry1.center();
+		
+	const signTextGeometry2 = new TextGeometry(
+		"Hello!",
+		{
+			font: font,
+			size: 0.1,
+			height: 0,
+			curveSegments: 6,
+			bevelEnabled: true,
+			bevelThickness: 0.002,
+			bevelSize: 0.005,
+			bevelOffset: 0.001,
+			bevelSegments: 12
+		}
+	);
+	signTextGeometry2.center();
+	
+	const signTextMaterial = new THREE.MeshBasicMaterial({
+		color: "darkblue",
+		transparent: true,
+	});
+	const signTextMesh = new THREE.Mesh(signTextGeometry1, signTextMaterial);
+	signTextMesh.scale.set(1.7, 1.7, 1.7);
+	signTextMesh.position.set(3.8, 1.3, 9.5);
+	signTextMesh.rotation.y = Math.PI;
+	
+	scene.add(signTextMesh);
 
 // const floorTexture = textureLoader.load('/models/checkboard.jpg');
 const planeGeometry1 = new THREE.PlaneGeometry(1000, 20);
@@ -202,10 +265,6 @@ plane1.position.set(0, -1, 15);
 plane2.position.set(0, 499, 20);
 plane1.receiveShadow = true;
 scene.add(plane1, plane2);
-
-const loader = new FontLoader();
-const fontJson = require("./models/폰트체/NanumMyeongjo_Regular.json");
-const font = loader.parse(fontJson);
 
 const textGeometry1 = new TextGeometry(
 	'사이트에 방문해주셔서 감사합니다\n\n현재 보고계시는 사이트는\n\n포트폴리오 목적으로 제작된 사이트이며\n\n저에 대한 설명과 제가 참여한 프로젝트들을\n\n보여드리기 위하여 제작되었습니다.\n\n상단에 보이는 프로젝트 보러가기 버튼을\n\n통하여 프로젝트를 확인 하실 수 있으며\n\n하단의 버튼을 통하여\n\n간단한 저의 소개와 보유기술을 확인 하실 수 있습니다.',
@@ -316,6 +375,11 @@ function checkIntersects() {
 		if (btnType === "stop버튼") {
 			videos[btnIndex].pause();
 			videos[btnIndex].currentTime = 0;
+		}
+		if (clickintersects[0].object.name == "Cube") {
+			actions[1].enabled = false;
+			actions[0].play();
+			signTextMesh.geometry = signTextGeometry2;
 		}
 	}
 }
