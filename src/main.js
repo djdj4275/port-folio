@@ -359,6 +359,8 @@ canvas.addEventListener('mousemove', (e) => {
 	}
 });
 
+let animationController = false;
+
 function checkIntersects() {
 	raycaster.setFromCamera(mouse, camera);
 
@@ -376,10 +378,21 @@ function checkIntersects() {
 			videos[btnIndex].pause();
 			videos[btnIndex].currentTime = 0;
 		}
-		if (clickintersects[0].object.name == "Cube") {
+		if (!animationController && clickintersects[0].object.name == "Cube") {
+			actions[0].enabled = true;
 			actions[1].enabled = false;
 			actions[0].play();
 			signTextMesh.geometry = signTextGeometry2;
+			animationController = true;
+		}
+		else if (animationController && clickintersects[0].object.name == "Cube") {
+			actions[0].enabled = false;
+			actions[1].enabled = true;
+			actions[1].time = 0;
+			actions[1].paused = false;
+			actions[1].play();
+			signTextMesh.geometry = signTextGeometry1;
+			animationController = false;
 		}
 	}
 }
