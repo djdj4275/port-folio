@@ -433,6 +433,25 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 
+.contact {
+  position: fixed;
+  width: 200px;
+  height: 50px;
+	bottom: 3%;
+	left: 3%;
+  margin: auto;
+  line-height: 50px;
+  font-size: 15px;
+}
+
+.contact span {
+  font-size: 20px;
+  animation: blink 1.5s infinite alternate;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: black;
+}
+
 @media screen and (max-width: 1200px), (max-height: 768px) {
   .fixbtn {
     font-size: 12px;

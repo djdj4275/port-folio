@@ -6,8 +6,6 @@ import { House } from './House';
 import { Board } from './Board';
 import { Buttons } from './Buttons';
 import gsap from 'gsap';
-import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper';
-import dat from 'dat.gui';
 import { PreventDragClick } from './PreventDragClick';
 import { Stack } from './Stack';
 import * as CANNON from 'cannon-es';
@@ -34,7 +32,7 @@ scene.fog = new THREE.Fog("black", 0.1, 30);
 
 // texture loaders
 const cubeTextureLoader = new THREE.CubeTextureLoader();
-	const cubeTexture = cubeTextureLoader
+	const skyTexture = cubeTextureLoader
 		.setPath("./models/skymap/")
 		.load([
    		"px.png",
@@ -44,7 +42,18 @@ const cubeTextureLoader = new THREE.CubeTextureLoader();
     	"pz.png",
    		"nz.png",
 		]);
-scene.background = cubeTexture;
+scene.background = skyTexture;
+
+	const spaceTexture = cubeTextureLoader
+		.setPath("./models/spacemap/")
+		.load([
+   		"px.png",
+    	"nx.png",
+    	"py.png",
+    	"ny.png",
+    	"pz.png",
+   		"nz.png",
+		]);
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
@@ -62,25 +71,12 @@ scene.add(camera);
 const ambientLight = new THREE.AmbientLight('white', 1);
 scene.add(ambientLight);
 
-// const reallight1 = new THREE.SpotLight('orange', 10, 50, Math.PI / 5);
 const reallight2 = new THREE.SpotLight('skyblue', 10, 40, Math.PI / 4.5);
-// reallight1.castShadow = true;
-// reallight1.position.set(5, 1, 1.5);
 reallight2.castShadow = true;
 reallight2.position.set(2, 1, 0);
-// reallight1.shadow.mapSize.width = 1024;
-// reallight1.shadow.mapSize.height = 1024;
 reallight2.shadow.mapSize.width = 1024;
 reallight2.shadow.mapSize.height = 1024;
 scene.add(reallight2);
-
-// const spotLight = new THREE.SpotLight('white', 1, 30, Math.PI / 6);
-// scene.add(spotLight);
-
-// const gui = new dat.GUI();
-//    gui.add(reallight2.position, "y", -300, 300, 0.01).name('메쉬의 y위치');
-//    gui.add(reallight2.position, "z", -200, 200, 0.01).name('메쉬의 z위치');
-//    gui.add(reallight2.position, "x", -200, 200, 0.01).name('카메라의 x위치');
 
 
 const gltfLoader = new GLTFLoader();
@@ -101,16 +97,7 @@ LogoMesh.position.set(6.2, 4.7, 10);
 LogoMesh.rotation.y = Math.PI;
 scene.add(LogoMesh);
 
-// const floorMesh = new THREE.Mesh(
-// 	new THREE.PlaneGeometry(1000, 1000),
-// 	new THREE.MeshStandardMaterial({
-// 		map : spaceTexture
-// 	})
-// );
-// floorMesh.rotation.x = -Math.PI / 2;
-// floorMesh.receiveShadow = true;
-// floorMesh.position.set(0, -10, 0);
-// scene.add(floorMesh);
+
 let newSection = 0;
 let wheelController = false;
 const radioBtns = document.querySelector('.radioBtns');
@@ -142,17 +129,6 @@ buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: 7,y: 0, 
 buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -10,y: 0, z: -45, index: 2}));
 buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: 10,y: 0, z: -65, index: 3}));
 buttons.push(new Buttons({ playBtnTex,pauseBtnTex,stopBtnTex, scene, x: -5, y: 0, z: -85, index: 4}));
-
-// const cubeMaterial = new THREE.MeshBasicMaterial({
-// 	envMap: cubeTexture,
-// 	metalness: 2,
-// 	roughness: 0.1
-// });
-
-// const boxGeometry = new THREE.BoxGeometry(100, 100, 100);
-// const boxMesh = new THREE.Mesh(boxGeometry, cubeMaterial);
-// boxMesh.position.set(-7, -52, -10);
-// scene.add(boxMesh);
 
 let mixer;
 const actions = [];
@@ -240,7 +216,7 @@ const actions = [];
 		color: "darkblue",
 		transparent: true,
 	});
-	const signTextMesh = new THREE.Mesh(signTextGeometry1, signTextMaterial);
+	const signTextMesh = new THREE.Mesh(signTextGeometry2, signTextMaterial);
 	signTextMesh.scale.set(1.7, 1.7, 1.7);
 	signTextMesh.position.set(3.8, 1.3, 9.5);
 	signTextMesh.rotation.y = Math.PI;
@@ -249,7 +225,7 @@ const actions = [];
 
 // const floorTexture = textureLoader.load('/models/checkboard.jpg');
 const planeGeometry1 = new THREE.PlaneGeometry(1000, 20);
-const planeGeometry2 = new THREE.PlaneGeometry(1000, 1000);
+const planeGeometry2 = new THREE.PlaneGeometry(1000, 100);
 const floorMaterial = new THREE.MeshStandardMaterial({
 	side: THREE.DoubleSide,
 	color: "skyblue",
@@ -262,7 +238,7 @@ const plane2 = new THREE.Mesh(planeGeometry2, floorMaterial);
 plane2.receiveShadow = true;
 plane1.rotation.x = -Math.PI * 0.5;
 plane1.position.set(0, -1, 15);
-plane2.position.set(0, 499, 20);
+plane2.position.set(0, 49, 20);
 plane1.receiveShadow = true;
 scene.add(plane1, plane2);
 
@@ -324,7 +300,6 @@ const textMesh2 = new THREE.Mesh(textGeometry2, textMaterial2);
 scene.add(textMesh2);
 
 
-
 // raycaster
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -382,7 +357,7 @@ function checkIntersects() {
 			actions[0].enabled = true;
 			actions[1].enabled = false;
 			actions[0].play();
-			signTextMesh.geometry = signTextGeometry2;
+			signTextMesh.geometry = signTextGeometry1;
 			animationController = true;
 		}
 		else if (animationController && clickintersects[0].object.name == "Cube") {
@@ -391,7 +366,7 @@ function checkIntersects() {
 			actions[1].time = 0;
 			actions[1].paused = false;
 			actions[1].play();
-			signTextMesh.geometry = signTextGeometry1;
+			signTextMesh.geometry = signTextGeometry2;
 			animationController = false;
 		}
 	}
@@ -545,11 +520,18 @@ Btn5.innerHTML = '보유기술 보기';
 btnContainer2.append(Btn3, Btn4, Btn5);
 document.body.append(btnContainer2);
 
+const contactBtn = document.querySelector('.contact').childNodes[1];
+
 const Btn1 = document.createElement("button");
 Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	contactBtn.style.display = 'inline-block';
+	scene.background = skyTexture;
+	for (const Btn of radioBtn) {
+		Btn.classList.remove(`active`);
+	}
 	wheelController = false;
 	document.body.style.overflow = "hidden";
 	radioBtns.style.top = "-100%";
@@ -589,6 +571,7 @@ btnContainer1.append(Btn2);
 const overlay = document.querySelector('.projectOverlay');
 
 Btn2.onclick = () => {
+	contactBtn.style.display = 'none';
 	wheelController = true;
 	radioBtn[0].classList.add(`active`);
 	radioBtns.style.top = "5%";
@@ -697,6 +680,18 @@ Btn5.onclick = () => {
 	}
 }
 
+contactBtn.onclick = () => {
+	gsap.to(camera.position,{duration: 1,y:120});
+	scene.background = spaceTexture;
+	btnContainer2.style.opacity = 0;
+	btnContainer2.style.zIndex = -1;
+	Btn1.style.opacity = 1;
+	Btn2.style.opacity = 0;
+	Btn1.style.zIndex = 1;
+	Btn2.style.zIndex = -1;
+}
+
+
 // 그리기 (시간)
 const clock = new THREE.Clock();
 
@@ -721,9 +716,7 @@ function draw() {
 	renderer.setAnimationLoop(draw);
 }
 
-// 이벤트
-// window.addEventListener('mousewheel',
-// 	setSection);
+
 window.onwheel = _.debounce((e) => {
 	setSection(e);
 }, 200);
