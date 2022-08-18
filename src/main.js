@@ -97,6 +97,18 @@ LogoMesh.position.set(6.2, 4.7, 10);
 LogoMesh.rotation.y = Math.PI;
 scene.add(LogoMesh);
 
+const pictureGeometry = new THREE.PlaneGeometry(2, 2);
+const pictureTexture = textureLoader.load('./models/기타사진/me.jpg');
+const pictureMaterial = new THREE.MeshBasicMaterial({
+	map: pictureTexture,
+	side: THREE.DoubleSide
+})
+const pictureMesh = new THREE.Mesh(pictureGeometry, pictureMaterial);
+pictureMesh.position.set(2, 121, 10);
+pictureMesh.rotation.y = Math.PI;
+scene.add(pictureMesh);
+
+
 
 let newSection = 0;
 let wheelController = false;
