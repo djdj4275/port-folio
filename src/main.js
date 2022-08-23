@@ -102,8 +102,8 @@ LogoMesh.rotation.y = Math.PI;
 scene.add(LogoMesh);
 
 const pictureGeometry = new THREE.PlaneGeometry(1, 2);
-const pictureTexture1 = textureLoader.load('./models/기타사진/me-1.jpg');
-const pictureTexture2 = textureLoader.load('./models/기타사진/me-2.jpg');
+const pictureTexture1 = textureLoader.load('./models/기타사진/me1.jpg');
+const pictureTexture2 = textureLoader.load('./models/기타사진/me2.jpg');
 const pictureMaterial1 = new THREE.MeshBasicMaterial({
 	map: pictureTexture1,
 	side: THREE.DoubleSide,
@@ -143,6 +143,7 @@ phonenumberGeometry.center();
 const ContactMaterial = new THREE.MeshBasicMaterial({color: "white",transparent: true,opacity: 0});
 
 const githubMesh = new THREE.Mesh(githubGeometry, ContactMaterial);
+githubMesh.name = "github";
 const emailMesh = new THREE.Mesh(emailGeometry, ContactMaterial);
 const phonenumberMesh = new THREE.Mesh(phonenumberGeometry, ContactMaterial);
 
@@ -152,7 +153,6 @@ phonenumberMesh.position.set(-1.8, 118.5, 7);
 githubMesh.rotation.y = Math.PI;
 emailMesh.rotation.y = Math.PI;
 phonenumberMesh.rotation.y = Math.PI;
-githubMesh.name = "github";
 
 scene.add(githubMesh,emailMesh,phonenumberMesh);
 
@@ -390,6 +390,9 @@ canvas.addEventListener('mousemove', (e) => {
 			document.body.style.cursor = "default";
 		}
 	}
+	else {
+		document.body.style.cursor = "default";
+	}
 });
 
 let animationController = false;
@@ -399,8 +402,12 @@ function checkIntersects() {
 
 	const clickintersects = raycaster.intersectObjects(scene.children);
 	if (clickintersects.length > 0) {
+		console.log(clickintersects[0].object);
 		let btnIndex = Number(clickintersects[0].object.name.substring(0, 1));
 		let btnType = clickintersects[0].object.name.substring(4);
+		if (clickintersects[0].object.name == "github") {
+			window.open("https://github.com/djdj4275");
+		}
 		if (btnType === "play버튼") {
 			videos[btnIndex].play();
 		}
@@ -426,9 +433,6 @@ function checkIntersects() {
 			actions[1].play();
 			signTextMesh.geometry = signTextGeometry2;
 			animationController = false;
-		}
-		if (clickintersects[0].object.name == "github") {
-			window.open("https://github.com/djdj4275");
 		}
 	}
 }
@@ -581,7 +585,7 @@ Btn5.innerHTML = '보유기술 보기';
 btnContainer2.append(Btn3, Btn4, Btn5);
 document.body.append(btnContainer2);
 
-const contactBtn = document.querySelector('.contact').childNodes[1];
+const contactBtn = document.querySelector('.contactBtn');
 
 const Btn1 = document.createElement("button");
 Btn1.classList.add('fixbtn', 'stackDelete');
