@@ -84,6 +84,10 @@ const gltfLoader = new GLTFLoader();
 const loadingManager = new THREE.LoadingManager();
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
+const loader = new FontLoader();
+const fontJson = require("./models/폰트체/NanumMyeongjo_Regular.json");
+const font = loader.parse(fontJson);
+
 const LogoGeometry = new THREE.CircleGeometry(1, 32);
 const LogoTexture = textureLoader.load('./models/로고사진/logo.png');
 const LogoMaterial = new THREE.MeshBasicMaterial({
@@ -97,17 +101,60 @@ LogoMesh.position.set(6.2, 4.7, 10);
 LogoMesh.rotation.y = Math.PI;
 scene.add(LogoMesh);
 
-const pictureGeometry = new THREE.PlaneGeometry(2, 2);
-const pictureTexture = textureLoader.load('./models/기타사진/me.jpg');
-const pictureMaterial = new THREE.MeshBasicMaterial({
-	map: pictureTexture,
-	side: THREE.DoubleSide
+const pictureGeometry = new THREE.PlaneGeometry(1, 2);
+const pictureTexture1 = textureLoader.load('./models/기타사진/me-1.jpg');
+const pictureTexture2 = textureLoader.load('./models/기타사진/me-2.jpg');
+const pictureMaterial1 = new THREE.MeshBasicMaterial({
+	map: pictureTexture1,
+	side: THREE.DoubleSide,
+	transparent: true,
+	opacity: 0
+});
+const pictureMaterial2 = new THREE.MeshBasicMaterial({
+	map: pictureTexture2,
+	side: THREE.DoubleSide,
+	transparent: true,
+	opacity: 0
 })
-const pictureMesh = new THREE.Mesh(pictureGeometry, pictureMaterial);
-pictureMesh.position.set(2, 121, 10);
-pictureMesh.rotation.y = Math.PI;
-scene.add(pictureMesh);
+const pictureMesh1 = new THREE.Mesh(pictureGeometry, pictureMaterial1);
+const pictureMesh2 = new THREE.Mesh(pictureGeometry, pictureMaterial2);
+pictureMesh1.position.set(4.5, 121, 10);
+pictureMesh2.position.set(-0.5, 121, 10);
+scene.add(pictureMesh1, pictureMesh2);
 
+const githubGeometry = new TextGeometry(
+	'GitHub : https://github.com/djdj4275',
+	{font: font,size: 0.1,height: 0,curveSegments: 6,bevelEnabled: true,bevelThickness: 0.002,bevelSize: 0.001,bevelOffset: 0.001,bevelSegments: 12}
+);
+githubGeometry.center();
+
+const emailGeometry = new TextGeometry(
+	'Email : djdj4275@naver.com',
+	{font: font,size: 0.1,height: 0,curveSegments: 6,bevelEnabled: true,bevelThickness: 0.002,bevelSize: 0.001,bevelOffset: 0.001,bevelSegments: 12}
+);
+emailGeometry.center();
+
+const phonenumberGeometry = new TextGeometry(
+	'PhoneNumber : 010-6516-4275',
+	{font: font,size: 0.1,height: 0,curveSegments: 6,bevelEnabled: true,bevelThickness: 0.002,bevelSize: 0.001,bevelOffset: 0.001,bevelSegments: 12}
+);
+phonenumberGeometry.center();
+
+const ContactMaterial = new THREE.MeshBasicMaterial({color: "white",transparent: true,opacity: 0});
+
+const githubMesh = new THREE.Mesh(githubGeometry, ContactMaterial);
+const emailMesh = new THREE.Mesh(emailGeometry, ContactMaterial);
+const phonenumberMesh = new THREE.Mesh(phonenumberGeometry, ContactMaterial);
+
+githubMesh.position.set(-1.8, 119.5, 7);
+emailMesh.position.set(-1.8, 119, 7);
+phonenumberMesh.position.set(-1.8, 118.5, 7);
+githubMesh.rotation.y = Math.PI;
+emailMesh.rotation.y = Math.PI;
+phonenumberMesh.rotation.y = Math.PI;
+githubMesh.name = "github";
+
+scene.add(githubMesh,emailMesh,phonenumberMesh);
 
 
 let newSection = 0;
@@ -187,10 +234,6 @@ const actions = [];
 		})
 		scene.add(signMesh);
 	}); 
-
-	const loader = new FontLoader();
-	const fontJson = require("./models/폰트체/NanumMyeongjo_Regular.json");
-	const font = loader.parse(fontJson);
 
 	const signTextGeometry1 = new TextGeometry(
 		"마스코트 파랭이",
@@ -340,6 +383,9 @@ canvas.addEventListener('mousemove', (e) => {
 		else if (moveintersects[0].object.name == "Cube") {
 			document.body.style.cursor = "pointer";
 		}
+		else if (moveintersects[0].object.name == "github") {
+			document.body.style.cursor = "pointer";
+		}
 		else {
 			document.body.style.cursor = "default";
 		}
@@ -380,6 +426,9 @@ function checkIntersects() {
 			actions[1].play();
 			signTextMesh.geometry = signTextGeometry2;
 			animationController = false;
+		}
+		if (clickintersects[0].object.name == "github") {
+			window.open("https://github.com/djdj4275");
 		}
 	}
 }
@@ -539,6 +588,18 @@ Btn1.classList.add('fixbtn', 'stackDelete');
 Btn1.innerHTML = '처음으로';
 Btn1.style.opacity = 0;
 Btn1.onclick = () => {
+	githubMesh.position.set(-1.8, 119.5, 7);
+	emailMesh.position.set(-1.8, 119, 7);
+	phonenumberMesh.position.set(-1.8, 118.5, 7);
+	githubMesh.material.opacity = 0;
+	emailMesh.material.opacity = 0;
+	phonenumberMesh.material.opacity = 0;
+	pictureMesh1.material.opacity = 0;
+	pictureMesh2.material.opacity = 0;
+	pictureMesh1.position.set(4.5, 121, 10);
+	pictureMesh2.position.set(-0.5, 121, 10);
+	pictureMesh1.rotation.y = 0;
+	pictureMesh2.rotation.y = 0;
 	contactBtn.style.display = 'inline-block';
 	scene.background = skyTexture;
 	for (const Btn of radioBtn) {
@@ -701,6 +762,24 @@ contactBtn.onclick = () => {
 	Btn2.style.opacity = 0;
 	Btn1.style.zIndex = 1;
 	Btn2.style.zIndex = -1;
+	setTimeout(() => {
+		gsap.to(pictureMesh1.material, { duration: 1, opacity: 1 });
+		gsap.to(pictureMesh2.material, { duration: 1, opacity: 1 });
+		gsap.to(pictureMesh1.rotation, { duration: 1, y: Math.PI*3 });
+		gsap.to(pictureMesh2.rotation, { duration: 1, y: -Math.PI*3 });
+		gsap.to(pictureMesh1.position, { duration: 1, x: 2.5});
+		gsap.to(pictureMesh2.position, { duration: 1, x: 1.5});
+	}, 1100);
+	setTimeout(() => {
+		gsap.to(githubMesh.material, { duration: 1, opacity: 1 });
+		gsap.to(emailMesh.material, { duration: 1, opacity: 1 });
+		gsap.to(phonenumberMesh.material, { duration: 1, opacity: 1 });
+		gsap.to(githubMesh.position, { duration: 1, y: 120.5});
+		gsap.to(emailMesh.position, { duration: 1, y: 120 });
+		gsap.to(phonenumberMesh.position, { duration: 1, y: 119.5});
+		gsap.to(pictureMesh1.position, {duration: 1, x: 1.5, y: 120, z: 7});
+		gsap.to(pictureMesh2.position, {duration: 1, x: 0.5, y: 120, z: 7});
+	}, 2100);
 }
 
 
