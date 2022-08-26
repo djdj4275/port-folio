@@ -9,7 +9,6 @@ export class Board {
 
 		this.index = info.index;
 		this.video = info.video;
-		this.video.src = data[this.index].videosrc;
 
 		let videoTexture = new THREE.VideoTexture(this.video);
 		videoTexture.minFilter = THREE.LinearFilter;
